@@ -1,0 +1,53 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+
+    <changeSet id="2021-08-02" author="Katrin">
+        <createTable tableName="department">
+            <column name="department_code" type="text">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="salary">
+            <column name="salary_code" type="int">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="code_name" type="int">
+            </column>
+        </createTable>
+
+        <createTable tableName="employee">
+            <column name="id_number" type="text">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="text"/>
+            <column name="department_code" type="text">
+                <constraints foreignKeyName="fk_employee_department" references="department(department_code)"/>
+            </column>
+            <column name="hourly_pay" type="numeric(5, 2)"/>
+            <column name="salary_code" type="int">
+                <constraints foreignKeyName="fk_employee_salary" references="salary(salary_code)"/>
+            </column>
+        </createTable>
+        <createTable tableName="working_hours">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="start_time" type="time"/>
+            <column name="end_time" type="time"/>
+            <column name="worked_time" type="text"/>
+            <column name="id_number" type="text">
+                <constraints foreignKeyName="fk_working_hours_employee"
+                             references="employee(id_number)"/>
+            </column>
+        </createTable>
+
+
+    </changeSet>
+
+</databaseChangeLog>
