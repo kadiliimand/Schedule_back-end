@@ -3,7 +3,6 @@ package repositories;
 import dataclasses.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.sql.Time;
@@ -48,38 +47,16 @@ public class Repository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public void changeSchedule(String id, String id_number, Date date, Time startTime, Time endTime) {
-        String sql = "UPDATE  working_hours SET id_number= :id_number, date=:date, " +
-                "start_time=:start_time, end_time= :end_time WHERE id=:shiftId ";
+    public void changeSchedule(String id, Date date, Time startTime, Time endTime) {
+        String sql = "UPDATE  working_hours SET id=:id, date=:date, " +
+                "start_time=:start_time, end_time= :end_time WHERE id=:id ";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("id_number", id_number);
+        paraMap.put("id", id);
         paraMap.put("date", date);
         paraMap.put("start_time", startTime);
         paraMap.put("end_time", endTime);
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public void getEmployeeId(String name) {
-        String sql = "SELECT id_number FROM employee WHERE name = :nameParam";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("nameParam", name);
-        jdbcTemplate.update(sql, paraMap);
-    }
-
-    public void getEmployeeScheduleData(String id_number, Date date) {
-        String sql = "SELECT id_number, date, start_time, end_time FROM " +
-                "working_hours WHERE date = :date AND id_number = :id_number";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("date", date);
-        paraMap.put("id_number", id_number);
-        jdbcTemplate.update(sql, paraMap);
-    }
-
-    public void deleteEmployeeScheduleData(String id) {
-        String sql = "DELETE ROW FROM working_hours WHERE id = :shiftId";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("shiftId", id);
-        jdbcTemplate.update(sql, paraMap);
-    }
 
 }
