@@ -1,10 +1,12 @@
-package repositories;
+package com.example.demo.repositories;
 
-import dataclasses.Employee;
-import dataclasses.Schedule;
+import com.example.demo.dataclasses.Employee;
+import com.example.demo.dataclasses.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -15,9 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@repositories.Repository
+@Repository
 
-public class Repository {
+public class ScheduleRepository {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
