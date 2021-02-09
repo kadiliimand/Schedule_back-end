@@ -23,10 +23,10 @@ public class ScheduleController {
         return scheduleService.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
     }
 
-//    @GetMapping("allEmployeesNames")
-//    public List<Employee> allEmployeesNames(){
-//        return;
-//    }
+    @GetMapping("allEmployeesNames")
+    public List<Employee> allEmployeesNames(){
+        return scheduleService.allEmployeesNames;
+    }
 
     @PostMapping("createSchedule")
     public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date, @RequestParam("start") Time startTime, @RequestParam("end") Time endTime) {
