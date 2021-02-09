@@ -63,11 +63,12 @@ public class ScheduleRepository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public void getEmployeeId(String name) {
+    public String getEmployeeId(String name) {
         String sql = "SELECT id_number FROM employee WHERE name = :nameParam";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("nameParam", name);
         jdbcTemplate.update(sql, paraMap);
+        return jdbcTemplate.queryForObject(sql, paraMap, String.class );
     }
 
     public List<Schedule> getEmployeeScheduleData(String id_number, Date date){
