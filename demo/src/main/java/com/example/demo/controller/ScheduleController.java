@@ -23,17 +23,23 @@ public class ScheduleController {
         return scheduleService.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
     }
 
+    @CrossOrigin
     @GetMapping("allEmployeesNames")
     public List<Employee> allEmployeesNames(){
-        return scheduleService.allEmployeesNames;
+        return scheduleService.allEmployeesNames();
     }
 
+    @CrossOrigin
     @PostMapping("createSchedule")
-    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date, @RequestParam("start") Time startTime, @RequestParam("end") Time endTime) {
-        return;
+    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date, @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime) {
+        return scheduleService.createSchedule(name, date, startTime, endTime);
     }
 
+//    @CrossOrigin
 //    @PutMapping("changeSchedule")
-//    public void changeSchedule()
+//    public String changeSchedule()
 
+    @CrossOrigin
+    @DeleteMapping("deleteEmployeeScheduleData")
+    public String deleteEmployeeScheduleData()
 }
