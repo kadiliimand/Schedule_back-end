@@ -1,17 +1,19 @@
 package repositories;
 
 import dataclasses.Employee;
+import dataclasses.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-//Kadi kommenteerib prooviks
 
 //@repositories.Repository
 
@@ -23,7 +25,7 @@ public class Repository {
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
 
-    public void newEmployee(String name, String idNumber, String departmentCode, BigDecimal hourlyPay,
+    public void createEmployee(String name, String idNumber, String departmentCode, BigDecimal hourlyPay,
                             int salaryCode, String password) {
         String sql = "INSERT INTO employee (id_number, name, department_code, hourly_pay, salary_code, password) " +
                 "VALUES (:id, :name, :departmentCode, :hourlyPay, :salaryCode, :password)";
@@ -66,13 +68,44 @@ public class Repository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public void getEmployeeScheduleData(String id_number, Date date) {
-        String sql = "SELECT id_number, date, start_time, end_time FROM " +
-                "working_hours WHERE date = :date AND id_number = :id_number";
+    public List<Schedule> getEmployeeScheduleData(String id_number, Date date){
+        String sql = "SELECT id_number, date, start_time, end_time FROM working_hours WHERE date = :date AND id_number = :id_number";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("date", date);
         paraMap.put("id_number", id_number);
-        jdbcTemplate.update(sql, paraMap);
+        return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
+    }
+
+    private class ScheduleRowMapper implements RowMapper<Schedule> {
+        @Override
+        public Schedule mapRow(ResultSet resultSet, int i) throws SQLException {
+            Schedule shift = new Schedule();
+            shift.setId(resultSet.getInt("id"));
+            shift.setDate(resultSet.getDate("date"));
+            shift.setStartTime(resultSet.getTime("start_time"));
+            shift.setEndTime(resultSet.getTime("end_date"));
+            shift.setIdNumber(resultSet.getString("id_number"));
+            return shift;
+        }
+    }
+
+    public List<Schedule> allEmployeesScheduleData(Date date) {
+        String sql = "SELECT * FROM working_hours WHERE date = :date";
+        return jdbcTemplate.query(sql, new HashMap<>(), new ScheduleRowMapper());
+    }
+
+    public List<Employee> allEmployeesNames() {
+        String sql = "SELECT * FROM employee";
+        return jdbcTemplate.query(sql, new HashMap<>(), new EmployeeRowMapper());
+    }
+
+    private class EmployeeRowMapper implements RowMapper{
+        @Override
+        public Employee mapRow(ResultSet resultSet, int i) throws SQLException{
+            Employee person = new Employee();
+            person.setName(resultSet.getString("name"));
+            return person;
+        }
     }
 
     public void deleteEmployeeScheduleData(String id) {
