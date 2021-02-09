@@ -21,7 +21,7 @@ public class ScheduleController {
     public String createEmployee(@RequestParam("name") String name, @RequestParam("id") String idNumber, @RequestParam("dep") String departmentCode, @RequestParam("pay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode, @RequestParam("password") String password){
         return scheduleService.createEmployee(name, idNumber, departmentCode, hourlyPay, salaryCode, password);
     }
-
+/*
     @GetMapping("allEmployeesNames")
     public List<Employee> allEmployeesNames(){
         return;
@@ -34,5 +34,5 @@ public class ScheduleController {
 
     @PutMapping("changeSchedule")
     public void changeSchedule()
-
+*/
 }

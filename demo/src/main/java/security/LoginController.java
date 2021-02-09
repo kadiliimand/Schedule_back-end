@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+/*
 //@Autowired
 //private PasswordEncoder passwordEncoder;
 @RestController
@@ -36,4 +37,8 @@ public class LoginController {
         String encodedPassword = scheduleRpository.requestPassword(loginCredentials.getRawPassword);
         return passwordEncoder.matches(loginCredentials.getRawPassword(), encodedPassword);
     }
+
+
 }
+
+ */
