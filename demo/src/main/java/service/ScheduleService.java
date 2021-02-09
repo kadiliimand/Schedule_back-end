@@ -26,12 +26,12 @@ public class ScheduleService {
     Employee employee = new Employee();
 
 
-    @Transactional
-    public String createEmployee(String name, String idNumber, String departmentCode,
-                                    BigDecimal hourlyPay, int salaryCode, String password) {
-        repository.cre (name, idNumber, departmentCode, hourlyPay, salaryCode, password);
-        return "New employee " +employee.getName()+" has been created.";
-    }
+//    @Transactional
+//    public String createEmployee(String name, String idNumber, String departmentCode,
+//                                    BigDecimal hourlyPay, int salaryCode, String password) {
+//        repository.cre (name, idNumber, departmentCode, hourlyPay, salaryCode, password);
+//        return "New employee " +employee.getName()+" has been created.";
+//    }
 /*
     @Transactional
     public String createCustomerAccount(Accounts bankAccount) {
