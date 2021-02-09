@@ -1,4 +1,4 @@
-package errorHandling;
+package com.example.demo.errorHandling;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

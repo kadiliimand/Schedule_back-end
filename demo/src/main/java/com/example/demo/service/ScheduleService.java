@@ -27,9 +27,9 @@ public class ScheduleService {
 
 
     @Transactional
-    public String createEmployee(String name, String idNumber, String departmentCode,
+    public String createEmployee(String idNumber, String name, String departmentCode,
                                     BigDecimal hourlyPay, int salaryCode, String password) {
-        scheduleRepository.createEmployee(name, idNumber, departmentCode, hourlyPay, salaryCode, password);
+        scheduleRepository.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
         return "New employee has been created.";
     }
 
