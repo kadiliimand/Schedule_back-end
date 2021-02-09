@@ -1,13 +1,18 @@
 package com.example.demo.service;
 
+import com.example.demo.dataclasses.Schedule;
 import com.example.demo.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -27,15 +32,20 @@ public class ScheduleService {
         scheduleRepository.createEmployee(name, idNumber, departmentCode, hourlyPay, salaryCode, password);
         return "New employee has been created.";
     }
-/*
+
     @Transactional
-    public String createCustomerAccount(Accounts bankAccount) {
-        bankRepository.createCustomerAccount(bankAccount);
-        return "New account for ID " + bankAccount.getAccountCustId() + " has been created.\n" +
-                "This account is " + bankAccount.getCustAccType() + ".";
+    public void createSchedule(String id, Date date, Time startTime, Time endTime) {
+        scheduleRepository.createSchedule(id, date, startTime, endTime);
     }
 
+    public String getEmployeeId(String name) {
+        return scheduleRepository.getEmployeeId(name);
+    }
 
+    public List<Schedule> getEmployeeScheduleData(String id_number, Date date){
+        return scheduleRepository.getEmployeeScheduleData(id_number, date);
+    }
+/*
     public int accountBalance(String account_nr) {
         return bankRepository.accountBalance(account_nr);
     }
