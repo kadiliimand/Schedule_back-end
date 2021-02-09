@@ -24,7 +24,7 @@ public class ScheduleController {
 
     @GetMapping("allEmployeesNames")
     public List<Employee> allEmployeesNames(){
-        return;
+        return ;
     }
 
     @PostMapping("createSchedule")
