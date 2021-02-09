@@ -17,22 +17,29 @@ public class ScheduleController {
     @Autowired
     ScheduleService scheduleService;
 
+    @CrossOrigin
     @PostMapping("createEmployee")
-    public String createEmployee(@RequestParam("name") String name, @RequestParam("id") String idNumber, @RequestParam("dep") String departmentCode, @RequestParam("pay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode, @RequestParam("password") String password){
-        return scheduleService.createEmployee(name, idNumber, departmentCode, hourlyPay, salaryCode, password);
+    public String createEmployee(@RequestParam("idNumber") String idNumber, @RequestParam("name") String name, @RequestParam("departmentCode") String departmentCode, @RequestParam("hourlyPay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode, @RequestParam("password") String password) {
+        return scheduleService.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
     }
-/*
+
+    @CrossOrigin
     @GetMapping("allEmployeesNames")
     public List<Employee> allEmployeesNames(){
-        return;
+        return scheduleService.allEmployeesNames();
     }
 
+    @CrossOrigin
     @PostMapping("createSchedule")
-    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date, @RequestParam("start") Time startTime, @RequestParam("end") Time endTime){
-        return;
+    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date, @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime) {
+        return scheduleService.createSchedule(name, date, startTime, endTime);
     }
 
-    @PutMapping("changeSchedule")
-    public void changeSchedule()
-*/
+//    @CrossOrigin
+//    @PutMapping("changeSchedule")
+//    public String changeSchedule()
+
+    @CrossOrigin
+    @DeleteMapping("deleteEmployeeScheduleData")
+    public String deleteEmployeeScheduleData()
 }

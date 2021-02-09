@@ -1,4 +1,4 @@
-package security;
+package com.example.demo.security;
 
 //@Service
 //public class UserDetailService implements UserDetailsService {

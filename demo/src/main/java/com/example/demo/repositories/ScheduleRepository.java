@@ -24,13 +24,13 @@ public class ScheduleRepository {
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
 
-    public void createEmployee(String name, String idNumber, String departmentCode, BigDecimal hourlyPay,
+    public void createEmployee(String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
                             int salaryCode, String password) {
-        String sql = "INSERT INTO employee (id_number, name, department_code, hourly_pay, salary_code, password) " +
-                "VALUES (:id, :name, :departmentCode, :hourlyPay, :salaryCode, :password)";
+        String sql = "INSERT INTO employee (name, id_number, department_code, hourly_pay, salary_code, password) " +
+                "VALUES (:name, :idNumber, :departmentCode, :hourlyPay, :salaryCode, :password)";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("id", idNumber);
         paraMap.put("name", name);
+        paraMap.put("idNumber", idNumber);
         paraMap.put("departmentCode", departmentCode);
         paraMap.put("hourlyPay", hourlyPay);
         paraMap.put("salaryCode", salaryCode);
