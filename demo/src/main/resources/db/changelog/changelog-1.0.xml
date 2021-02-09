@@ -47,5 +47,11 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="2021-08-02 vol 2" author="Gunnar">
+    <addColumn tableName="employee">
+        <column name="password" type="text">
+        </column>
+    </addColumn>
+    </changeSet>
 
 </databaseChangeLog>
