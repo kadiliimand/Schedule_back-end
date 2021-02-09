@@ -1,4 +1,4 @@
-package dataclasses;
+package com.example.demo.dataclasses;
 
 import java.sql.Time;
 import java.util.Date;
