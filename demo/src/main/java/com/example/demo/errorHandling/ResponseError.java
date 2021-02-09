@@ -1,4 +1,4 @@
-package errorHandling;
+package com.example.demo.errorHandling;
 
 public class ResponseError {
     private String message;

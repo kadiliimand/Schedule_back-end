@@ -1,4 +1,4 @@
-package security;
+package com.example.demo.security;
 
 public class LoginCredentials {
     public Object getRawPassword;
