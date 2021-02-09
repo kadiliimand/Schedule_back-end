@@ -1,4 +1,4 @@
-package dataclasses;
+package com.example.demo.dataclasses;
 
 import java.math.BigDecimal;
 
