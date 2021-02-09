@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.dataclasses.Employee;
+import com.example.demo.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,16 +18,14 @@ public class ScheduleService {
     String strDate = df2.format(todaysDate);
 
     @Autowired
-    private Repository repository;
-
-    Employee employee = new Employee();
+    private ScheduleRepository scheduleRepository;
 
 
     @Transactional
     public String createEmployee(String name, String idNumber, String departmentCode,
                                     BigDecimal hourlyPay, int salaryCode, String password) {
-        repository.cre (name, idNumber, departmentCode, hourlyPay, salaryCode, password);
-        return "New employee " +employee.getName()+" has been created.";
+        scheduleRepository.createEmployee(name, idNumber, departmentCode, hourlyPay, salaryCode, password);
+        return "New employee has been created.";
     }
 /*
     @Transactional

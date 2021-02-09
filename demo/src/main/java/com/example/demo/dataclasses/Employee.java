@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class Employee {
 
+
     private String name;
     private String idNumber;
     private String departmentCode;
@@ -58,4 +59,6 @@ public class Employee {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }
