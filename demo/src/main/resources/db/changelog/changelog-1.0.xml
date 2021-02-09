@@ -46,8 +46,6 @@
                              references="employee(id_number)"/>
             </column>
         </createTable>
-
-
     </changeSet>
 
 </databaseChangeLog>
