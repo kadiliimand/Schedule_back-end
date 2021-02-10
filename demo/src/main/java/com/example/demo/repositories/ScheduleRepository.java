@@ -68,11 +68,11 @@ public class ScheduleRepository {
         return jdbcTemplate.queryForObject(sql, paraMap, String.class );
     }
 
-    public List<Schedule> getEmployeeScheduleData(String id_number, Calendar date){
-        String sql = "SELECT id_number, date, start_time, end_time FROM working_hours WHERE date = :date AND id_number = :id_number";
+    public List<Schedule> getEmployeeScheduleData(String id_number, Date dateFrom, Date dateTo){
+        String sql = "SELECT id_number, date, start_time, end_time FROM working_hours WHERE date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("date", date);
-        paraMap.put("id_number", id_number);
+        paraMap.put("dateFrom", dateFrom);
+        paraMap.put("dateTo", dateTo);
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
     }
 
