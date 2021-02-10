@@ -1,7 +1,8 @@
 package com.example.demo.dataclasses;
 
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
+
 
 public class Schedule {
     private int id;
@@ -58,5 +59,4 @@ public class Schedule {
     public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
     }
-
 }

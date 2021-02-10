@@ -83,13 +83,13 @@ public class ScheduleRepository {
             shift.setId(resultSet.getInt("id"));
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
-            shift.setEndTime(resultSet.getTime("end_date"));
+            shift.setEndTime(resultSet.getTime("end_time"));
             shift.setIdNumber(resultSet.getString("id_number"));
             return shift;
         }
     }
 
-    public List<Schedule> allEmployeesScheduleData(Date date) {
+    public List<Schedule> allEmployeesScheduleData(Calendar date) {
         String sql = "SELECT * FROM working_hours WHERE date = :date";
         return jdbcTemplate.query(sql, new HashMap<>(), new ScheduleRowMapper());
     }
