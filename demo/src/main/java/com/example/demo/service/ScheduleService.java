@@ -47,7 +47,7 @@ public class ScheduleService {
 
     public List<Schedule> getEmployeeScheduleData(String name, Date dateFrom, Date dateTo){
         String id = scheduleRepository.getEmployeeId(name);
-        return (scheduleRepository.getEmployeeScheduleData(id, dateFrom, dateTo);
+        return scheduleRepository.getEmployeeScheduleData(id, dateFrom, dateTo);
     }
 
 
