@@ -12,10 +12,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 
@@ -52,7 +49,7 @@ public class ScheduleRepository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public void changeSchedule(String id, String id_number, Date date, Time startTime, Time endTime) {
+    public void changeSchedule(String id, String id_number, Calendar date, Time startTime, Time endTime) {
         String sql = "UPDATE  working_hours SET id_number= :id_number, date=:date, " +
                 "start_time=:start_time, end_time= :end_time WHERE id=:shiftId ";
         Map<String, Object> paraMap = new HashMap<>();
@@ -71,7 +68,7 @@ public class ScheduleRepository {
         return jdbcTemplate.queryForObject(sql, paraMap, String.class );
     }
 
-    public List<Schedule> getEmployeeScheduleData(String id_number, Date date){
+    public List<Schedule> getEmployeeScheduleData(String id_number, Calendar date){
         String sql = "SELECT id_number, date, start_time, end_time FROM working_hours WHERE date = :date AND id_number = :id_number";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("date", date);
@@ -86,13 +83,13 @@ public class ScheduleRepository {
             shift.setId(resultSet.getInt("id"));
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
-            shift.setEndTime(resultSet.getTime("end_date"));
+            shift.setEndTime(resultSet.getTime("end_time"));
             shift.setIdNumber(resultSet.getString("id_number"));
             return shift;
         }
     }
 
-    public List<Schedule> allEmployeesScheduleData(Date date) {
+    public List<Schedule> allEmployeesScheduleData(Calendar date) {
         String sql = "SELECT * FROM working_hours WHERE date = :date";
         return jdbcTemplate.query(sql, new HashMap<>(), new ScheduleRowMapper());
     }

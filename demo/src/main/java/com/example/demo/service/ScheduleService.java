@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.repositories.ScheduleRepository;
+import errorHandling.ScheduleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,10 +10,7 @@ import java.math.BigDecimal;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service
@@ -34,21 +32,36 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void createSchedule(String id, Date date, Time startTime, Time endTime) {
-        scheduleRepository.createSchedule(id, date, startTime, endTime);
+    public void createSchedule(String name, Date date, Time startTime, Time endTime) {
+        String id = scheduleRepository.getEmployeeId(name);
+        if (id==null) {
+            throw new ScheduleException("No such name");
+        } else {
+            scheduleRepository.createSchedule(id, date, startTime, endTime);
+        }
     }
 
     public String getEmployeeId(String name) {
         return scheduleRepository.getEmployeeId(name);
     }
 
-    public List<Schedule> getEmployeeScheduleData(String id_number, Date date){
-        return scheduleRepository.getEmployeeScheduleData(id_number, date);
+    public List<Schedule> getEmployeeScheduleData(String name, Calendar dateFrom, Calendar dateTo){
+        String id = scheduleRepository.getEmployeeId(name);
+        List scheduleResult = new ArrayList();
+        while (dateFrom.compareTo(dateTo) != 0) {
+            if(scheduleRepository.getEmployeeScheduleData(id, dateFrom)!= null){
+//on see õige asi? Tuleb siit "if"-ist tulemus "null", kui kodanik sel kuupäeval tööl ei olnud?
+            scheduleResult.add(scheduleRepository.getEmployeeScheduleData(id, dateFrom));
+            dateFrom.add(Calendar.DAY_OF_MONTH, 1);
+        }}
+//kas saab üldse listi laadida fronti/Vuesse?
+//Mul on tunne, et olen väga valel teel
+        return scheduleResult;
     }
+
+
+
 /*
-    public int accountBalance(String account_nr) {
-        return bankRepository.accountBalance(account_nr);
-    }
 
     public String userPassword(String cust_id) {
         return bankRepository.userPassword(cust_id);
