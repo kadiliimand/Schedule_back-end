@@ -38,28 +38,6 @@ public class ScheduleRepository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public void createSchedule(String id, Date date, Time startTime, Time endTime) {
-        String sql = "INSERT INTO working_hours (id, date, start_time, end_time) " +
-                "VALUES (:id, :date, :start_time, :end_time)";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("id", id);
-        paraMap.put("date", date);
-        paraMap.put("start_time", startTime);
-        paraMap.put("end_time", endTime);
-        jdbcTemplate.update(sql, paraMap);
-    }
-
-    public void changeSchedule(String id, String id_number, Calendar date, Time startTime, Time endTime) {
-        String sql = "UPDATE  working_hours SET id_number= :id_number, date=:date, " +
-                "start_time=:start_time, end_time= :end_time WHERE id=:shiftId ";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("id_number", id_number);
-        paraMap.put("date", date);
-        paraMap.put("start_time", startTime);
-        paraMap.put("end_time", endTime);
-        jdbcTemplate.update(sql, paraMap);
-    }
-
     public String getEmployeeId(String name) {
         String sql = "SELECT id_number FROM employee WHERE name = :nameParam";
         Map<String, Object> paraMap = new HashMap<>();
@@ -68,33 +46,22 @@ public class ScheduleRepository {
         return jdbcTemplate.queryForObject(sql, paraMap, String.class );
     }
 
-    public List<Schedule> getEmployeeScheduleData(String id_number, Date dateFrom, Date dateTo){
-        String sql = "SELECT id_number, date, start_time, end_time FROM working_hours WHERE date >= :dateFrom AND date <= :dateTo";
+    public void updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
+                                  int salaryCode, String password) {
+        String sql = "UPDATE  employee SET id_number= :id_number, name = :name, " +
+                "department_code = :departmentCode, hourly_pay = :hourlyPay, salary_code = :salaryCode, password = :password WHERE id=:id";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("dateFrom", dateFrom);
-        paraMap.put("dateTo", dateTo);
-        return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
+        paraMap.put("id", id);
+        paraMap.put("name", name);
+        paraMap.put("idNumber", idNumber);
+        paraMap.put("departmentCode", departmentCode);
+        paraMap.put("hourlyPay", hourlyPay);
+        paraMap.put("salaryCode", salaryCode);
+        paraMap.put("password", password);
+        jdbcTemplate.update(sql, paraMap);
     }
 
-    private class ScheduleRowMapper implements RowMapper<Schedule> {
-        @Override
-        public Schedule mapRow(ResultSet resultSet, int i) throws SQLException {
-            Schedule shift = new Schedule();
-            shift.setId(resultSet.getInt("id"));
-            shift.setDate(resultSet.getDate("date"));
-            shift.setStartTime(resultSet.getTime("start_time"));
-            shift.setEndTime(resultSet.getTime("end_time"));
-            shift.setIdNumber(resultSet.getString("id_number"));
-            return shift;
-        }
-    }
-
-    public List<Schedule> allEmployeesScheduleData(Calendar date) {
-        String sql = "SELECT * FROM working_hours WHERE date = :date";
-        return jdbcTemplate.query(sql, new HashMap<>(), new ScheduleRowMapper());
-    }
-
-    public List<Employee> allEmployeesNames() {
+    public List<Employee> getAllEmployeesNames() {
         String sql = "SELECT name FROM employee";
         return jdbcTemplate.query(sql, new HashMap<>(), new EmployeeRowMapper());
     }
@@ -108,11 +75,84 @@ public class ScheduleRepository {
         }
     }
 
-    public void deleteEmployeeScheduleData(String id) {
+    public List<Employee> getAllEmployeesData(){
+        String sql = "SELECT * FROM employee";
+        return jdbcTemplate.query(sql, new HashMap<>(), new EmployeesRowMapper());
+    }
+
+    private class EmployeesRowMapper implements RowMapper<Employee> {
+        @Override
+        public Employee mapRow(ResultSet resultSet, int i) throws SQLException {
+            Employee person = new Employee();
+            person.setId(resultSet.getInt("id")),
+            person.setName(resultSet.getString("name"));
+            person.setIdNumber(resultSet.getString("id_number"));
+            person.setDepartmentCode(resultSet.getString("department_code"));
+            person.setHourlyPay(resultSet.getBigDecimal("hourly_pay"));
+            person.setSalaryCode(resultSet.getInt("salary_code"));
+            person.setPassword(resultSet.getString("password"));
+            return person;
+        }
+    }
+
+    public void createSchedule(String id, Date date, Time startTime, Time endTime) {
+        String sql = "INSERT INTO working_hours (id, date, start_time, end_time) " +
+                "VALUES (:id, :date, :start_time, :end_time)";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("id", id);
+        paraMap.put("date", date);
+        paraMap.put("start_time", startTime);
+        paraMap.put("end_time", endTime);
+        jdbcTemplate.update(sql, paraMap);
+    }
+
+    public void changeScheduleRow(int id, String id_number, Date date, Time startTime, Time endTime) {
+        String sql = "UPDATE  working_hours SET id_number= :id_number, date=:date, " +
+                "start_time=:start_time, end_time= :end_time WHERE id=:shiftId ";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("shiftId", id);
+        paraMap.put("id_number", id_number);
+        paraMap.put("date", date);
+        paraMap.put("start_time", startTime);
+        paraMap.put("end_time", endTime);
+        jdbcTemplate.update(sql, paraMap);
+    }
+
+    public List<Schedule> getEmployeeScheduleData(String id_number, Date dateFrom, Date dateTo){
+        String sql = "SELECT id, id_number, date, start_time, end_time FROM working_hours WHERE idNumber = :idNumber AND date >= :dateFrom AND date <= :dateTo";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("idNumber", id_number);
+        paraMap.put("date", dateFrom);
+        paraMap.put("date", dateTo);
+        return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
+    }
+
+    private class ScheduleRowMapper implements RowMapper<Schedule> {
+        @Override
+        public Schedule mapRow(ResultSet resultSet, int i) throws SQLException {
+            Schedule shift = new Schedule();
+            shift.setId(resultSet.getInt("id"));
+            shift.setDateFrom(resultSet.getDate("date"));
+            shift.setDateTo(resultSet.getDate("date"));
+            shift.setStartTime(resultSet.getTime("start_time"));
+            shift.setEndTime(resultSet.getTime("end_time"));
+            shift.setIdNumber(resultSet.getString("id_number"));
+            return shift;
+        }
+    }
+
+    public void deleteEmployeeScheduleRow(int id) {
         String sql = "DELETE ROW FROM working_hours WHERE id = :shiftId";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("shiftId", id);
         jdbcTemplate.update(sql, paraMap);
     }
+
+//    public List<Schedule> getAllEmployeesScheduleData(Date dateFrom, Date dateTo) {
+//        String sql = "SELECT * FROM working_hours WHERE date >= :dateFrom AND date <= :dateTo";
+//        paraMap.put("date", dateFrom);
+//        paraMap.put("date", dateTo);
+//        return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
+//    }
 
 }

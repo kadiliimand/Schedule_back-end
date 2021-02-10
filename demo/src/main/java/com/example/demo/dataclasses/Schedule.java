@@ -6,7 +6,8 @@ import java.sql.Time;
 
 public class Schedule {
     private int id;
-    private Date date;
+    private Date dateFrom;
+    private Date dateTo;
     private Time startTime;
     private Time endTime;
     private int workAtTime;
@@ -20,12 +21,20 @@ public class Schedule {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateFrom() {
+        return dateFrom;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
+    }
+
+    public Date getDateTo() {
+        return dateTo;
+    }
+
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
     }
 
     public Time getStartTime() {
