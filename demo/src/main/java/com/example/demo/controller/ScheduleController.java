@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.dataclasses.Employee;
+import com.example.demo.dataclasses.Schedule;
 import com.example.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,5 +43,13 @@ public class ScheduleController {
 
     @CrossOrigin
     @DeleteMapping("deleteEmployeeScheduleData")
-    public String deleteEmployeeScheduleData()
+    public String deleteEmployeeScheduleData(){
+
+    }
+
+    @CrossOrigin
+    @GetMapping("getEmployeeScheduleData")
+    public List<Schedule> getEmployeeScheduleData(@RequestParam("name") String name, @RequestParam("dateFrom") Date dateFrom, @RequestParam("dateTo") Date dateTo){
+        return scheduleService.getEmployeeScheduleData(name, dateFrom, dateTo);
+    }
 }
