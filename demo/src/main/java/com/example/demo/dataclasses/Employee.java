@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 public class Employee {
 
-
     private String name;
     private int id;
     private String idNumber;
