@@ -17,6 +17,7 @@ public class LoginController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     public LoginRepository loginRepository;
 
     @CrossOrigin
