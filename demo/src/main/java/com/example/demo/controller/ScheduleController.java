@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dataclasses.Employee;
+import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.sql.Time;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +44,8 @@ public class ScheduleController {
     }
 
     @CrossOrigin
-    @GetMapping("allEmployeesNames")
-    public List<Employee> allEmployeesNames(){
+    @GetMapping("public/getAllEmployeesNames")
+    public List<EmployeeNames> getAllEmployeesNames(){
         return scheduleService.getAllEmployeesNames();
     }
 

@@ -1,6 +1,7 @@
 package com.example.demo.repositories;
 
 import com.example.demo.dataclasses.Employee;
+import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -61,7 +62,7 @@ public class ScheduleRepository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public List<Employee> getAllEmployeesNames() {
+    public List<EmployeeNames> getAllEmployeesNames() {
         String sql = "SELECT name FROM employee";
         return jdbcTemplate.query(sql, new HashMap<>(), new EmployeeRowMapper());
     }
