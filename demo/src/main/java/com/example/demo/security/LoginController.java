@@ -1,6 +1,5 @@
 package com.example.demo.security;
 
-import com.example.demo.errorHandling.ScheduleException;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

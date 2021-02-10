@@ -2,8 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.Schedule;
-import com.example.demo.repositories.ScheduleRepository;
 import com.example.demo.errorHandling.ScheduleException;
+import com.example.demo.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +17,6 @@ import java.util.*;
 
 @Service
 public class ScheduleService {
-
-    Date todaysDate = new Date();
-    DateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
-    String strDate = df2.format(todaysDate);
 
     @Autowired
     private ScheduleRepository scheduleRepository;

@@ -6,6 +6,7 @@ public class Employee {
 
 
     private String name;
+    private int id;
     private String idNumber;
     private String departmentCode;
     private BigDecimal hourlyPay;
@@ -18,6 +19,14 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIdNumber() {
@@ -59,6 +68,4 @@ public class Employee {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }
