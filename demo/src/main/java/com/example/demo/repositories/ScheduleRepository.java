@@ -95,7 +95,7 @@ public class ScheduleRepository {
     }
 
     public List<Employee> allEmployeesNames() {
-        String sql = "SELECT * FROM employee";
+        String sql = "SELECT name FROM employee";
         return jdbcTemplate.query(sql, new HashMap<>(), new EmployeeRowMapper());
     }
 
