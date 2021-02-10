@@ -44,7 +44,7 @@ public class ScheduleController {
     @CrossOrigin
     @DeleteMapping("deleteEmployeeScheduleData")
     public String deleteEmployeeScheduleData(){
-
+        return scheduleService.deleteEmployee
     }
 
     @CrossOrigin
