@@ -51,18 +51,22 @@ public class ScheduleController {
 
     @CrossOrigin
     @PostMapping("createSchedule")
-    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date, @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime) {
-        return scheduleService.createSchedule(name, date, startTime, endTime);
+    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date,
+                               @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime) {
+        scheduleService.createSchedule(name, date, startTime, endTime);
     }
 
-//    @CrossOrigin
-//    @PutMapping("changeSchedule")
-//    public String changeSchedule()
+    @CrossOrigin
+    @PutMapping("changeScheduleRow")
+    public String changeScheduleRow(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("date") Date date,
+                                 @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime){
+        return scheduleService.changeScheduleRow(id, name, date, startTime, endTime);
+    }
 
     @CrossOrigin
-    @DeleteMapping("deleteEmployeeScheduleData")
-    public String deleteEmployeeScheduleData(){
-        return scheduleService.deleteEmployee;
+    @DeleteMapping("deleteEmployeeScheduleRow")
+    public String deleteEmployeeScheduleRow(@RequestParam("id") int id){
+        return scheduleService.deleteEmployeeScheduleRow(id);
     }
 
     @CrossOrigin

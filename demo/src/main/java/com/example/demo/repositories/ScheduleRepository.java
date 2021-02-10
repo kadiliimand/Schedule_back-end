@@ -84,7 +84,7 @@ public class ScheduleRepository {
         @Override
         public Employee mapRow(ResultSet resultSet, int i) throws SQLException {
             Employee person = new Employee();
-            person.setId(resultSet.getInt("id")),
+            person.setId(resultSet.getInt("id"));
             person.setName(resultSet.getString("name"));
             person.setIdNumber(resultSet.getString("id_number"));
             person.setDepartmentCode(resultSet.getString("department_code"));
