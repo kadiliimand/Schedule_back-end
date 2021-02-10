@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.repositories.ScheduleRepository;
-import errorHandling.ScheduleException;
+import com.example.demo.errorHandling.ScheduleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,18 +45,9 @@ public class ScheduleService {
         return scheduleRepository.getEmployeeId(name);
     }
 
-    public List<Schedule> getEmployeeScheduleData(String name, Calendar dateFrom, Calendar dateTo){
+    public List<Schedule> getEmployeeScheduleData(String name, Date dateFrom, Date dateTo){
         String id = scheduleRepository.getEmployeeId(name);
-        List scheduleResult = new ArrayList();
-        while (dateFrom.compareTo(dateTo) != 0) {
-            if(scheduleRepository.getEmployeeScheduleData(id, dateFrom)!= null){
-//on see õige asi? Tuleb siit "if"-ist tulemus "null", kui kodanik sel kuupäeval tööl ei olnud?
-            scheduleResult.add(scheduleRepository.getEmployeeScheduleData(id, dateFrom));
-            dateFrom.add(Calendar.DAY_OF_MONTH, 1);
-        }}
-//kas saab üldse listi laadida fronti/Vuesse?
-//Mul on tunne, et olen väga valel teel
-        return scheduleResult;
+        return (scheduleRepository.getEmployeeScheduleData(id, dateFrom, dateTo);
     }
 
 
