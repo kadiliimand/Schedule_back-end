@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -45,7 +47,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void createSchedule(String name, Date date, Time startTime, Time endTime) {
+    public void createSchedule(String name, LocalDate date, LocalTime startTime, LocalTime endTime) {
         String idNumber = scheduleRepository.getEmployeeId(name);
         if (idNumber == null) {
             throw new ScheduleException("No such name");

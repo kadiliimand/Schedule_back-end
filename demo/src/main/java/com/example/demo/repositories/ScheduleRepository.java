@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 @Repository
@@ -43,7 +45,6 @@ public class ScheduleRepository {
         String sql = "SELECT id_number FROM employee WHERE name = :nameParam";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("nameParam", name);
-        jdbcTemplate.update(sql, paraMap);
         return jdbcTemplate.queryForObject(sql, paraMap, String.class );
     }
 
@@ -96,7 +97,7 @@ public class ScheduleRepository {
         }
     }
 
-    public void createSchedule(String idNumber, Date date, Time startTime, Time endTime) {
+    public void createSchedule(String idNumber, LocalDate date, LocalTime startTime, LocalTime endTime) {
         String sql = "INSERT INTO working_hours (id_number, date, start_time, end_time) " +
                 "VALUES (:id, :date, :start_time, :end_time)";
         Map<String, Object> paraMap = new HashMap<>();

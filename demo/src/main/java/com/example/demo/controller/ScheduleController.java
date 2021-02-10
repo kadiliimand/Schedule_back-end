@@ -4,11 +4,16 @@ import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.service.ScheduleService;
+import jdk.jfr.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -52,8 +57,10 @@ public class ScheduleController {
 
     @CrossOrigin
     @PostMapping("public/createSchedule")
-    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date,
-                               @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime) {
+    public void createSchedule(@RequestParam("name") String name,
+                               @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                               @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
+                               @RequestParam("endTime")  @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
         scheduleService.createSchedule(name, date, startTime, endTime);
     }
 

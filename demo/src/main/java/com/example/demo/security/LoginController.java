@@ -25,7 +25,7 @@ public class LoginController {
     public String login(String idNumber, String password) {
         if (validate(idNumber, password)) {
             Date now = new Date();
-            Date expiration = new Date(now.getTime() + 1000 * 60 * 60);
+            Date expiration = new Date(now.getTime() + 1000 * 60 * 60 * 24 * 7);
             JwtBuilder builder = Jwts.builder()
                     .setExpiration(expiration)
                     .setIssuedAt(new Date())
