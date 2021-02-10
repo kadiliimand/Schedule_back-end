@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.dataclasses.Schedule;
+import com.example.demo.errorHandling.ScheduleException;
 import com.example.demo.repositories.ScheduleRepository;
-import errorHandling.ScheduleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

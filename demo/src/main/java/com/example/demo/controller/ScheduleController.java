@@ -23,23 +23,31 @@ public class ScheduleController {
         return scheduleService.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
     }
 
-    @CrossOrigin
-    @GetMapping("allEmployeesNames")
-    public List<Employee> allEmployeesNames(){
-        return scheduleService.allEmployeesNames();
-    }
-
-    @CrossOrigin
-    @PostMapping("createSchedule")
-    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date, @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime) {
-        return scheduleService.createSchedule(name, date, startTime, endTime);
-    }
-
 //    @CrossOrigin
-//    @PutMapping("changeSchedule")
-//    public String changeSchedule()
-
-    @CrossOrigin
-    @DeleteMapping("deleteEmployeeScheduleData")
-    public String deleteEmployeeScheduleData()
+//    @GetMapping("allEmployeesNames")
+//    public List<Employee> allEmployeesNames(){
+//        return scheduleService.allEmployeesNames();
+//    }
+//
+//    @CrossOrigin
+//    @PostMapping("createSchedule")
+//    public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date, @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime) {
+//        return scheduleService.createSchedule(name, date, startTime, endTime);
+//    }
+//
+////    @CrossOrigin
+////    @PutMapping("changeSchedule")
+////    public String changeSchedule()
+//
+//    @CrossOrigin
+//    @DeleteMapping("deleteEmployeeScheduleData")
+//    public String deleteEmployeeScheduleData(){
+//
+//    }
+//
+//    @CrossOrigin
+//    @GetMapping("getEmployeeScheduleData")
+//    public List<Schedule> getEmployeeScheduleData(@RequestParam("name") String name, @RequestParam("dateFrom") Date dateFrom, @RequestParam("dateTo") Date dateTo){
+//        return scheduleService.getEmployeeScheduleData(name, dateFrom, dateTo);
+//    }
 }
