@@ -38,19 +38,19 @@ public class ScheduleController {
     }
 
     @CrossOrigin
-    @GetMapping("getAllEmployeesData")
+    @GetMapping("public/getAllEmployeesData")
     public List<Employee> getAllEmployeesData(){
         return scheduleService.getAllEmployeesData();
     }
 
     @CrossOrigin
-    @GetMapping("allEmployeesNames")
+    @GetMapping("public/getAllEmployeesNames")
     public List<Employee> allEmployeesNames(){
         return scheduleService.getAllEmployeesNames();
     }
 
     @CrossOrigin
-    @PostMapping("createSchedule")
+    @PostMapping("public/createSchedule")
     public void createSchedule(@RequestParam("name") String name, @RequestParam("date") Date date,
                                @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime) {
         scheduleService.createSchedule(name, date, startTime, endTime);

@@ -19,7 +19,7 @@ public class SpringSecurityConfigurationJWT extends WebSecurityConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 .antMatchers("/public/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         http.csrf().disable();
