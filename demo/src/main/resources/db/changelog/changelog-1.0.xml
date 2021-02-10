@@ -58,4 +58,10 @@
 <modifyDataType columnName="worked_time" newDataType="int" tableName="working_hours"/>
 </changeSet>
 
+    <changeSet id="2021-02-10" author="Kadi">
+        <addColumn tableName="employee">
+            <column name="id" type="int" autoIncrement="true"></column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

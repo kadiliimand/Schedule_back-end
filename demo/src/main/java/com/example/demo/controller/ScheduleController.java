@@ -21,14 +21,32 @@ public class ScheduleController {
 
     @CrossOrigin
     @PostMapping("createEmployee")
-    public String createEmployee(@RequestParam("idNumber") String idNumber, @RequestParam("name") String name, @RequestParam("departmentCode") String departmentCode, @RequestParam("hourlyPay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode, @RequestParam("password") String password) {
+    public String createEmployee(@RequestParam("idNumber") String idNumber, @RequestParam("name") String name,
+                                 @RequestParam("departmentCode") String departmentCode,
+                                 @RequestParam("hourlyPay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode,
+                                 @RequestParam("password") String password) {
         return scheduleService.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+    }
+
+    @CrossOrigin
+    @PutMapping("updateEmployeeData")
+    public String updateEmployeeData(@RequestParam("id") int id, @RequestParam("idNumber") String idNumber,
+                                     @RequestParam("name") String name, @RequestParam("departmentCode") String departmentCode,
+                                     @RequestParam("hourlyPay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode,
+                                     @RequestParam("password") String password){
+        return scheduleService.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+    }
+
+    @CrossOrigin
+    @GetMapping("getAllEmployeesData")
+    public List<Employee> getAllEmployeesData(){
+        return scheduleService.getAllEmployeesData();
     }
 
     @CrossOrigin
     @GetMapping("allEmployeesNames")
     public List<Employee> allEmployeesNames(){
-        return scheduleService.allEmployeesNames();
+        return scheduleService.getAllEmployeesNames();
     }
 
     @CrossOrigin
@@ -44,7 +62,7 @@ public class ScheduleController {
     @CrossOrigin
     @DeleteMapping("deleteEmployeeScheduleData")
     public String deleteEmployeeScheduleData(){
-        return scheduleService.deleteEmployee
+        return scheduleService.deleteEmployee;
     }
 
     @CrossOrigin

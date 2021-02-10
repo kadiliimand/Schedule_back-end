@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.repositories.ScheduleRepository;
 import com.example.demo.errorHandling.ScheduleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -26,18 +28,34 @@ public class ScheduleService {
 
     @Transactional
     public String createEmployee(String idNumber, String name, String departmentCode,
-                                    BigDecimal hourlyPay, int salaryCode, String password) {
+                                 BigDecimal hourlyPay, int salaryCode, String password) {
         scheduleRepository.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
-        return "New employee has been created.";
+        return "New employee has been created!";
+    }
+
+    @Transactional
+    public List<Employee> getAllEmployeesData() {
+        return scheduleRepository.getAllEmployeesData();
+    }
+
+    @Transactional
+    public String updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay, int salaryCode, String password) {
+        scheduleRepository.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+        return "All data is updated!";
+    }
+
+    @Transactional
+    public List<Employee> getAllEmployeesNames() {
+        return scheduleRepository.getAllEmployeesNames();
     }
 
     @Transactional
     public void createSchedule(String name, Date date, Time startTime, Time endTime) {
-        String id = scheduleRepository.getEmployeeId(name);
-        if (id==null) {
+        String idNumber = scheduleRepository.getEmployeeId(name);
+        if (idNumber == null) {
             throw new ScheduleException("No such name");
         } else {
-            scheduleRepository.createSchedule(id, date, startTime, endTime);
+            scheduleRepository.createSchedule(idNumber, date, startTime, endTime);
         }
     }
 
@@ -45,90 +63,20 @@ public class ScheduleService {
         return scheduleRepository.getEmployeeId(name);
     }
 
-    public List<Schedule> getEmployeeScheduleData(String name, Date dateFrom, Date dateTo){
-        String id = scheduleRepository.getEmployeeId(name);
-        return scheduleRepository.getEmployeeScheduleData(id, dateFrom, dateTo);
+    public List<Schedule> getEmployeeScheduleData(String name, Date dateFrom, Date dateTo) {
+        String idNumber = scheduleRepository.getEmployeeId(name);
+        return scheduleRepository.getEmployeeScheduleData(idNumber, dateFrom, dateTo);
     }
 
-
-
-/*
-
-    public String userPassword(String cust_id) {
-        return bankRepository.userPassword(cust_id);
+    public String changeScheduleRow(int id, String name, Date date, Time startTime, Time endTime) {
+        String idNumber = scheduleRepository.getEmployeeId(name);
+        scheduleRepository.changeScheduleRow(id, name, date, startTime, endTime);
+        return "Schedule change successful!";
     }
 
-
-    @Transactional
-    public String depositMoney(String accountNrTo, Integer amount) {
-        int newAccBalanceTo;
-        if (amount < 0)
-            throw new MyException("Check your amount input, cant add negative amount");
-        else {
-            int oldAccBalance = bankRepository.accountBalance(accountNrTo);
-            newAccBalanceTo = oldAccBalance + amount;
-            bankRepository.updateAccountBalance(accountNrTo, newAccBalanceTo);
-            bankRepository.dataToTransHistory(null, accountNrTo, "Money deposit to account", amount, newAccBalanceTo, strDate);
-        }
-        return amount + " was deposited to account nr: " + accountNrTo + ". The new balance is " + newAccBalanceTo;
+    public String deleteEmployeeScheduleRow(int id) {
+        scheduleRepository.deleteEmployeeScheduleRow(id);
+        return "Work shift deleted!";
     }
-
-    @Transactional
-    public String withdrawMoney(String accountFrom, Integer amount) {
-        int newAccBalanceFrom;
-        if (amount <= 0) {
-            throw new MyException("Check your amount input, cant add negative amount");
-        }
-        int oldAccBalanceFrom = bankRepository.accountBalance(accountFrom);
-        if ((oldAccBalanceFrom - amount) < 0) {
-            throw new MyException("There is not enough cash in the account");
-        } else {
-            newAccBalanceFrom = oldAccBalanceFrom - amount;
-            bankRepository.updateAccountBalance(accountFrom, newAccBalanceFrom);
-            bankRepository.dataToTransHistory(accountFrom, null, "Money withrawal from account", -amount, newAccBalanceFrom, strDate);
-        }
-        return "New balance for account nr: " + accountFrom + " is: " + newAccBalanceFrom;
-    }
-
-    @Transactional
-    public String transferMoney(String accountFrom, String accountTo, int amount) {
-        int newAccBalanceFrom;
-        int newAccBalanceTo;
-        if (amount <= 0)
-            throw new MyException("Check your amount input, cant add negative amount");
-        int oldAccBalance = bankRepository.accountBalance(accountFrom);
-        if ((oldAccBalance - amount) < 0) {
-            throw new MyException("There is not enough cash in the account");
-        } else {
-            newAccBalanceFrom = oldAccBalance - amount;
-            bankRepository.updateAccountBalance(accountFrom, newAccBalanceFrom);
-            bankRepository.dataToTransHistory(accountFrom, accountTo, "FROM acc to acc transfer", -amount, newAccBalanceFrom, strDate);
-            int oldAccBalanceTo = bankRepository.accountBalance(accountTo);
-            newAccBalanceTo = oldAccBalanceTo + amount;
-            bankRepository.updateAccountBalance(accountTo, newAccBalanceTo);
-            bankRepository.dataToTransHistory(accountFrom, accountTo, "TO acc to acc transfer", amount, newAccBalanceTo, strDate);
-        }
-        return "The balance after transactions is: \n " +
-                "for the account: " + accountFrom + ", the balance after outgoing transfer is: " + newAccBalanceFrom + ".\n" +
-                " For the account: " + accountTo + ", the balance after incoming transfer is: " + newAccBalanceTo;
-    }
-
-    public List<CustomerData> getCustomerList() {
-        return bankRepository.bankCustomers();
-    }
-
-    public List<Accounts> getAccounts() {
-        return bankRepository.bankAccounts();
-    }
-
-    public List<Accounts> getTransactionHistory() {
-        return bankRepository.transactionHistory();
-    }
-
-    public List<Accounts> getcustomerTransactionHistory(String custAccNr) {
-        return bankRepository.customerTransactionHistory(custAccNr);
-    }
-
- */
 }
 
