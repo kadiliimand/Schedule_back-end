@@ -22,8 +22,8 @@ public class LoginController {
 
     @CrossOrigin
     @PostMapping("public/login")
-    public String login(@RequestBody LoginCredentials loginCredentials) {
-        if (validate(loginCredentials)) {
+    public String login(String idNumber, String password) {
+        if (validate(idNumber, password)) {
             Date now = new Date();
             Date expiration = new Date(now.getTime() + 1000 * 60 * 60);
             JwtBuilder builder = Jwts.builder()
@@ -40,9 +40,9 @@ public class LoginController {
 
     }
 
-    public boolean validate(LoginCredentials loginCredentials) {
-        String encodedPassword = loginRepository.findPasswordByIdNumber(loginCredentials.getIdNumber());
-        return passwordEncoder.matches(loginCredentials.getPassword(), encodedPassword);
+    public boolean validate(String idNumber, String password) {
+        String encodedPassword = loginRepository.findPasswordByIdNumber(idNumber);
+        return passwordEncoder.matches(password, encodedPassword);
     }
 
 //    public void savePassword(String password) {
