@@ -65,7 +65,7 @@ public class ScheduleService {
 
     public String changeScheduleRow(int id, String name, Date date, Time startTime, Time endTime) {
         String idNumber = scheduleRepository.getEmployeeId(name);
-        scheduleRepository.changeScheduleRow(id, name, date, startTime, endTime);
+        scheduleRepository.changeScheduleRow(id, idNumber, date, startTime, endTime);
         return "Schedule change successful!";
     }
 

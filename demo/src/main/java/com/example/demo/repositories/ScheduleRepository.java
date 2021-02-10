@@ -96,11 +96,11 @@ public class ScheduleRepository {
         }
     }
 
-    public void createSchedule(String id, Date date, Time startTime, Time endTime) {
-        String sql = "INSERT INTO working_hours (id, date, start_time, end_time) " +
+    public void createSchedule(String idNumber, Date date, Time startTime, Time endTime) {
+        String sql = "INSERT INTO working_hours (id_number, date, start_time, end_time) " +
                 "VALUES (:id, :date, :start_time, :end_time)";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("id", id);
+        paraMap.put("id", idNumber);
         paraMap.put("date", date);
         paraMap.put("start_time", startTime);
         paraMap.put("end_time", endTime);
