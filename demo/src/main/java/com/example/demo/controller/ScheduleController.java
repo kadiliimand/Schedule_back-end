@@ -46,7 +46,7 @@ public class ScheduleController {
 
     @CrossOrigin
     @GetMapping("public/getAllEmployeesNames")
-    public List<Employee> allEmployeesNames(){
+    public List<EmployeeNames> allEmployeesNames(){
         return scheduleService.getAllEmployeesNames();
     }
 
