@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dataclasses.Employee;
+import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.errorHandling.ScheduleException;
 import com.example.demo.repositories.ScheduleRepository;
@@ -10,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -41,7 +40,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    public List<Employee> getAllEmployeesNames() {
+    public List<EmployeeNames> getAllEmployeesNames() {
         return scheduleRepository.getAllEmployeesNames();
     }
 

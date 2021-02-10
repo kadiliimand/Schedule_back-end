@@ -54,14 +54,18 @@
     </addColumn>
     </changeSet>
 
-<changeSet id="2021-02-09vol1" author="Gunnar">
-<modifyDataType columnName="worked_time" newDataType="int" tableName="working_hours"/>
-</changeSet>
+    <changeSet id="2021-02-09vol1" author="Gunnar">
+        <modifyDataType columnName="worked_time" newDataType="int" tableName="working_hours"/>
+    </changeSet>
 
     <changeSet id="2021-02-10" author="Kadi">
         <addColumn tableName="employee">
             <column name="id" type="int" autoIncrement="true"></column>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="2021-02-10vol1" author="Gunnar">
+        <modifyDataType columnName="code_name" newDataType="text" tableName="salary"/>
     </changeSet>
 
 </databaseChangeLog>
