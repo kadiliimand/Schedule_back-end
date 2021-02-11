@@ -4,18 +4,13 @@ import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.service.ScheduleService;
-import jdk.jfr.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -60,14 +55,16 @@ public class ScheduleController {
     public void createSchedule(@RequestParam("name") String name,
                                @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-                               @RequestParam("endTime")  @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
+                               @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
         scheduleService.createSchedule(name, date, startTime, endTime);
     }
 
     @CrossOrigin
     @PutMapping("changeScheduleRow")
-    public String changeScheduleRow(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("date") Date date,
-                                 @RequestParam("startTime") Time startTime, @RequestParam("endTime") Time endTime){
+    public String changeScheduleRow(@RequestParam("id") int id, @RequestParam("name") String name,
+                                    @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                    @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
+                                    @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
         return scheduleService.changeScheduleRow(id, name, date, startTime, endTime);
     }
 
@@ -79,7 +76,9 @@ public class ScheduleController {
 
     @CrossOrigin
     @GetMapping("getEmployeeScheduleData")
-    public List<Schedule> getEmployeeScheduleData(@RequestParam("name") String name, @RequestParam("dateFrom") Date dateFrom, @RequestParam("dateTo") Date dateTo){
+    public List<Schedule> getEmployeeScheduleData(@RequestParam("name") String name,
+                                                  @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                                  @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getEmployeeScheduleData(name, dateFrom, dateTo);
     }
 }

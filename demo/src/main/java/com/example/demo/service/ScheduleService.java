@@ -10,10 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.List;
 
 
 @Service
@@ -36,7 +35,8 @@ public class ScheduleService {
     }
 
     @Transactional
-    public String updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay, int salaryCode, String password) {
+    public String updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
+                                     int salaryCode, String password) {
         scheduleRepository.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
         return "All data is updated!";
     }
@@ -60,12 +60,12 @@ public class ScheduleService {
         return scheduleRepository.getEmployeeId(name);
     }
 
-    public List<Schedule> getEmployeeScheduleData(String name, Date dateFrom, Date dateTo) {
+    public List<Schedule> getEmployeeScheduleData(String name, LocalDate dateFrom, LocalDate dateTo) {
         String idNumber = scheduleRepository.getEmployeeId(name);
         return scheduleRepository.getEmployeeScheduleData(idNumber, dateFrom, dateTo);
     }
 
-    public String changeScheduleRow(int id, String name, Date date, Time startTime, Time endTime) {
+    public String changeScheduleRow(int id, String name, LocalDate date, LocalTime startTime, LocalTime endTime) {
         String idNumber = scheduleRepository.getEmployeeId(name);
         scheduleRepository.changeScheduleRow(id, idNumber, date, startTime, endTime);
         return "Schedule change successful!";
