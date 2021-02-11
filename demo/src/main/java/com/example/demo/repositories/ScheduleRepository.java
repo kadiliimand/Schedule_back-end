@@ -53,7 +53,7 @@ public class ScheduleRepository {
     }
 
     public List<Schedule> getEmployeeScheduleData(String id_number, LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT id, id_number, date, start_time, end_time FROM working_hours WHERE id_Number = :idNumber " +
+        String sql = "SELECT id, id_number, date, start_time, end_time, worked_time FROM working_hours WHERE id_Number = :idNumber " +
                 "AND date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNumber", id_number);
@@ -66,11 +66,11 @@ public class ScheduleRepository {
         @Override
         public Schedule mapRow(ResultSet resultSet, int i) throws SQLException {
             Schedule shift = new Schedule();
-            shift.setId(resultSet.getInt("id"));
-            shift.setDateFrom(resultSet.getDate("date"));
-            shift.setDateTo(resultSet.getDate("date"));
+//            shift.setId(resultSet.getInt("id"));
+            shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
+            shift.setWorkedTime(resultSet.getInt("worked_time"));
             shift.setIdNumber(resultSet.getString("id_number"));
             return shift;
         }
