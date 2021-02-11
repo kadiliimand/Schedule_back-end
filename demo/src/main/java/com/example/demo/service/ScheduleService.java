@@ -4,6 +4,7 @@ import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.errorHandling.ScheduleException;
+import com.example.demo.repositories.EmployeeRepository;
 import com.example.demo.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,34 +22,37 @@ public class ScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
 
     @Transactional
     public String createEmployee(String idNumber, String name, String departmentCode,
                                  BigDecimal hourlyPay, int salaryCode, String password) {
-        scheduleRepository.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+        employeeRepository.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
         return "New employee has been created!";
     }
 
     @Transactional
     public List<Employee> getAllEmployeesData() {
-        return scheduleRepository.getAllEmployeesData();
+        return employeeRepository.getAllEmployeesData();
     }
 
     @Transactional
     public String updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
                                      int salaryCode, String password) {
-        scheduleRepository.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+        employeeRepository.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
         return "All data is updated!";
     }
 
     @Transactional
     public List<EmployeeNames> getAllEmployeesNames() {
-        return scheduleRepository.getAllEmployeesNames();
+        return employeeRepository.getAllEmployeesNames();
     }
 
     @Transactional
     public void createSchedule(String name, LocalDate date, LocalTime startTime, LocalTime endTime) {
-        String idNumber = scheduleRepository.getEmployeeId(name);
+        String idNumber = employeeRepository.getEmployeeId(name);
         if (idNumber == null) {
             throw new ScheduleException("No such name");
         } else {
@@ -57,16 +61,16 @@ public class ScheduleService {
     }
 
     public String getEmployeeId(String name) {
-        return scheduleRepository.getEmployeeId(name);
+        return employeeRepository.getEmployeeId(name);
     }
 
     public List<Schedule> getEmployeeScheduleData(String name, LocalDate dateFrom, LocalDate dateTo) {
-        String idNumber = scheduleRepository.getEmployeeId(name);
+        String idNumber = employeeRepository.getEmployeeId(name);
         return scheduleRepository.getEmployeeScheduleData(idNumber, dateFrom, dateTo);
     }
 
     public String changeScheduleRow(int id, String name, LocalDate date, LocalTime startTime, LocalTime endTime) {
-        String idNumber = scheduleRepository.getEmployeeId(name);
+        String idNumber = employeeRepository.getEmployeeId(name);
         scheduleRepository.changeScheduleRow(id, idNumber, date, startTime, endTime);
         return "Schedule change successful!";
     }
