@@ -57,8 +57,8 @@ public class ScheduleRepository {
                 "AND date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNumber", id_number);
-        paraMap.put("date", dateFrom);
-        paraMap.put("date", dateTo);
+        paraMap.put("dateFrom", dateFrom);
+        paraMap.put("dateTo", dateTo);
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
     }
 
