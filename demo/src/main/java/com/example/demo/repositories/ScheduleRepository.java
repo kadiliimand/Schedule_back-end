@@ -53,7 +53,7 @@ public class ScheduleRepository {
     }
 
     public List<Schedule> getEmployeeScheduleData(String id_number, LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT id, id_number, date, start_time, end_time FROM working_hours WHERE idNumber = :idNumber " +
+        String sql = "SELECT id, id_number, date, start_time, end_time FROM working_hours WHERE id_Number = :idNumber " +
                 "AND date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNumber", id_number);
