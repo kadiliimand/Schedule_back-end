@@ -6,12 +6,21 @@ import java.sql.Time;
 
 public class Schedule {
     private int id;
+    private Date date;
     private Date dateFrom;
     private Date dateTo;
     private Time startTime;
     private Time endTime;
-    private int workAtTime;
+    private int workedTime;
     private String idNumber;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public int getId() {
         return id;
@@ -53,12 +62,12 @@ public class Schedule {
         this.endTime = endTime;
     }
 
-    public int getWorkAtTime() {
-        return workAtTime;
+    public int getWorkedTime() {
+        return workedTime;
     }
 
-    public void setWorkAtTime(int workAtTime) {
-        this.workAtTime = workAtTime;
+    public void setWorkedTime(int workedTime) {
+        this.workedTime = workedTime;
     }
 
     public String getIdNumber() {

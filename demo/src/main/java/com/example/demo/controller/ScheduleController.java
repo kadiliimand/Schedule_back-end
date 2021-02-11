@@ -53,7 +53,7 @@ public class ScheduleController {
     @CrossOrigin
     @PostMapping("public/createSchedule")
     public void createSchedule(@RequestParam("name") String name,
-                               @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                               @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date,
                                @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
                                @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
         scheduleService.createSchedule(name, date, startTime, endTime);
@@ -62,7 +62,7 @@ public class ScheduleController {
     @CrossOrigin
     @PutMapping("public/changeScheduleRow")
     public String changeScheduleRow(@RequestParam("id") int id, @RequestParam("name") String name,
-                                    @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                    @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date,
                                     @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
                                     @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
         return scheduleService.changeScheduleRow(id, name, date, startTime, endTime);
@@ -77,8 +77,8 @@ public class ScheduleController {
     @CrossOrigin
     @GetMapping("public/getEmployeeScheduleData")
     public List<Schedule> getEmployeeScheduleData(@RequestParam("name") String name,
-                                                  @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                                  @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
+                                                  @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
+                                                  @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
         return scheduleService.getEmployeeScheduleData(name, dateFrom, dateTo);
     }
 }
