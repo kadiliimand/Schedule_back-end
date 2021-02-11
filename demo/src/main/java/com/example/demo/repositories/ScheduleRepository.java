@@ -52,13 +52,13 @@ public class ScheduleRepository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public List<Schedule> getEmployeeScheduleData(String id_number, LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT id, id_number, date, start_time, end_time FROM working_hours WHERE idNumber = :idNumber " +
+    public List<Schedule> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo){
+        String sql = "SELECT id, id_number, date, start_time, end_time FROM working_hours WHERE id_number = :id_number " +
                 "AND date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("idNumber", id_number);
-        paraMap.put("dateFrom", dateFrom);
-        paraMap.put("dateTo", dateTo);
+        paraMap.put("id_number", idNumber);
+        paraMap.put("date_from", dateFrom);
+        paraMap.put("date_to", dateTo);
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
     }
 
