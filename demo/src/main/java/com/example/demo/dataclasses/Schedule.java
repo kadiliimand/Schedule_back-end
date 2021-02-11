@@ -10,7 +10,7 @@ public class Schedule {
     private Date dateTo;
     private Time startTime;
     private Time endTime;
-    private int workAtTime;
+    private int workedHours;
     private String idNumber;
 
     public int getId() {
@@ -53,12 +53,12 @@ public class Schedule {
         this.endTime = endTime;
     }
 
-    public int getWorkAtTime() {
-        return workAtTime;
+    public int getWorkedHours() {
+        return workedHours;
     }
 
-    public void setWorkAtTime(int workAtTime) {
-        this.workAtTime = workAtTime;
+    public void setWorkedHours(int workedHours) {
+        this.workedHours = workedHours;
     }
 
     public String getIdNumber() {

@@ -71,6 +71,7 @@ public class ScheduleRepository {
             shift.setDateTo(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
+            shift.setWorkedHours(resultSet.getInt("worked_time"));
             shift.setIdNumber(resultSet.getString("id_number"));
             return shift;
         }
