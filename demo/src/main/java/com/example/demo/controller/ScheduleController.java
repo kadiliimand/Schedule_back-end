@@ -37,7 +37,7 @@ public class ScheduleController {
                                      @RequestParam("password") String password){
         return scheduleService.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
     }
-
+    //http://localhost:8080/public/getAllEmployeesData
     @CrossOrigin
     @GetMapping("public/getAllEmployeesData")
     public List<Employee> getAllEmployeesData(){
