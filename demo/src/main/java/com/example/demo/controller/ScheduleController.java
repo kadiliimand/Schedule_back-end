@@ -21,7 +21,7 @@ public class ScheduleController {
     ScheduleService scheduleService;
 
     @CrossOrigin
-    @PostMapping("createEmployee")
+    @PostMapping("public/createEmployee")
     public String createEmployee(@RequestParam("idNumber") String idNumber, @RequestParam("name") String name,
                                  @RequestParam("departmentCode") String departmentCode,
                                  @RequestParam("hourlyPay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode,
@@ -30,7 +30,7 @@ public class ScheduleController {
     }
 
     @CrossOrigin
-    @PutMapping("updateEmployeeData")
+    @PutMapping("public/updateEmployeeData")
     public String updateEmployeeData(@RequestParam("id") int id, @RequestParam("idNumber") String idNumber,
                                      @RequestParam("name") String name, @RequestParam("departmentCode") String departmentCode,
                                      @RequestParam("hourlyPay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode,
@@ -60,7 +60,7 @@ public class ScheduleController {
     }
 
     @CrossOrigin
-    @PutMapping("changeScheduleRow")
+    @PutMapping("public/changeScheduleRow")
     public String changeScheduleRow(@RequestParam("id") int id, @RequestParam("name") String name,
                                     @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                     @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
@@ -69,13 +69,13 @@ public class ScheduleController {
     }
 
     @CrossOrigin
-    @DeleteMapping("deleteEmployeeScheduleRow")
+    @DeleteMapping("public/deleteEmployeeScheduleRow")
     public String deleteEmployeeScheduleRow(@RequestParam("id") int id){
         return scheduleService.deleteEmployeeScheduleRow(id);
     }
 
     @CrossOrigin
-    @GetMapping("getEmployeeScheduleData")
+    @GetMapping("public/getEmployeeScheduleData")
     public List<Schedule> getEmployeeScheduleData(@RequestParam("name") String name,
                                                   @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                                   @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
