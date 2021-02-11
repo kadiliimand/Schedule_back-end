@@ -4,6 +4,7 @@ import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.service.ScheduleService;
+import liquibase.pro.packaged.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -80,5 +81,12 @@ public class ScheduleController {
                                                   @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
                                                   @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
         return scheduleService.getEmployeeScheduleData(name, dateFrom, dateTo);
+    }
+
+    @CrossOrigin
+    @GetMapping("public/getAllEmployeesScheduleData")
+    public List<Schedule> getAllEmployeesScheduleData(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
+                                                      @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
+        return scheduleService.getAllEmployeesScheduleData(dateFrom, dateTo);
     }
 }
