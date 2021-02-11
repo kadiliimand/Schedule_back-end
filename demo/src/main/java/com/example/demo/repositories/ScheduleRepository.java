@@ -66,7 +66,7 @@ public class ScheduleRepository {
         @Override
         public Schedule mapRow(ResultSet resultSet, int i) throws SQLException {
             Schedule shift = new Schedule();
-//            shift.setId(resultSet.getInt("id"));
+            shift.setId(resultSet.getInt("id"));
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
@@ -83,11 +83,12 @@ public class ScheduleRepository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-//    public List<Schedule> getAllEmployeesScheduleData(Date dateFrom, Date dateTo) {
-//        String sql = "SELECT * FROM working_hours WHERE date >= :dateFrom AND date <= :dateTo";
-//        paraMap.put("date", dateFrom);
-//        paraMap.put("date", dateTo);
-//        return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
-//    }
+    public List<Schedule> getAllEmployeesScheduleData(LocalDate dateFrom, LocalDate dateTo) {
+       String sql = "SELECT * FROM working_hours WHERE date >= :dateFrom AND date <= :dateTo";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("dateFrom", dateFrom);
+        paraMap.put("dateTo", dateTo);
+        return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
+    }
 
 }
