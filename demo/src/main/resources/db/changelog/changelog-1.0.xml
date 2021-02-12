@@ -68,4 +68,8 @@
         <modifyDataType columnName="code_name" newDataType="text" tableName="salary"/>
     </changeSet>
 
+    <changeSet id="2021-02-12" author="Kadi">
+        <renameColumn tableName="working_hours" newColumnName="wh_id" oldColumnName="id"/>
+    </changeSet>
+
 </databaseChangeLog>
