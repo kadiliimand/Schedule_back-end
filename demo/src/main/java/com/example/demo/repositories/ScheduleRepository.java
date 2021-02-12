@@ -43,7 +43,7 @@ public class ScheduleRepository {
 
     public void changeScheduleRow(int id, String id_number, LocalDate date, LocalTime startTime, LocalTime endTime) {
         String sql = "UPDATE  working_hours SET id_number= :id_number, date=:date, " +
-                "start_time=:start_time, end_time= :end_time, worked_time= :workedTime WHERE id=:shiftId ";
+                "start_time=:start_time, end_time= :end_time, worked_time= :workedTime WHERE wh_id=:shiftId ";
         Duration workedTime = Duration.between(startTime, endTime);
 
         Map<String, Object> paraMap = new HashMap<>();
@@ -56,22 +56,21 @@ public class ScheduleRepository {
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public List<Schedule> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT id, id_number, date, start_time, end_time, worked_time FROM working_hours WHERE id_number = :idNumber " +
+    public List<ScheduleWithNames> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo){
+        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.id_number WHERE e.id_number = :idNumber " +
                 "AND date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNumber", idNumber);
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
-        return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
+        return jdbcTemplate.query(sql, paraMap, new ScheduleWithNamesRowMapper());
     }
 
     private class ScheduleRowMapper implements RowMapper<Schedule> {
         @Override
         public Schedule mapRow(ResultSet resultSet, int i) throws SQLException {
-            double workedHours = resultSet.getInt("worked_time");
             Schedule shift = new Schedule();
-            shift.setId(resultSet.getInt("id"));
+            shift.setId(resultSet.getInt("wh_id"));
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
@@ -82,7 +81,7 @@ public class ScheduleRepository {
     }
 
     public List<ScheduleWithNames> getAllEmployeeScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.id_number";
+        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.id_number WHERE date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
@@ -104,7 +103,7 @@ public class ScheduleRepository {
     }
 
     public void deleteEmployeeScheduleRow(int id) {
-        String sql = "DELETE ROW FROM working_hours WHERE id = :shiftId";
+        String sql = "DELETE ROW FROM working_hours WHERE wh_id = :shiftId";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("shiftId", id);
         jdbcTemplate.update(sql, paraMap);

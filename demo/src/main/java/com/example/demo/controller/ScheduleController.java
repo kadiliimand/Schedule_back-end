@@ -77,7 +77,7 @@ public class ScheduleController {
 
     @CrossOrigin
     @GetMapping("public/getEmployeeScheduleData")
-    public List<Schedule> getEmployeeScheduleData(@RequestParam("name") String name,
+    public List<ScheduleWithNames> getEmployeeScheduleData(@RequestParam("name") String name,
                                                   @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
                                                   @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
         return scheduleService.getEmployeeScheduleData(name, dateFrom, dateTo);
