@@ -1,6 +1,7 @@
 package com.example.demo.repositories;
 
 import com.example.demo.dataclasses.Schedule;
+import com.example.demo.dataclasses.ScheduleReport;
 import com.example.demo.dataclasses.ScheduleWithNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -136,14 +137,19 @@ public class ScheduleRepository {
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
-        return jdbcTemplate.query(sql, paraMap, new ScheduleReport());
+        return jdbcTemplate.query(sql, paraMap, new ScheduleReportRowMapper());
     }
 
-    private class ScheduleReport implements RowMapper<ScheduleReport> {
+    private class ScheduleReportRowMapper implements RowMapper<ScheduleReport> {
         @Override
         public ScheduleReport mapRow(ResultSet resultSet, int i) throws SQLException {
             ScheduleReport report = new ScheduleReport();
-
+            report.setIdNumber(resultSet.getString("id_number"));
+            report.setSalaryCode(resultSet.getInt("salary_code"));
+            report.setHourlyPay(resultSet.getBigDecimal("hourly_pay"));
+            report.setWorkedHours(resultSet.getDouble("working_hours"));
+            report.setEmptyRow("");
+            report.setDepartmentCode(resultSet.getString("department_code"));
             return report;
         }
     }
