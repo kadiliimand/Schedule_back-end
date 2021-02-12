@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
+import com.example.demo.dataclasses.ScheduleWithNames;
 import com.example.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -87,6 +88,13 @@ public class ScheduleController {
     public List<Schedule> getAllEmployeesScheduleData(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
                                                       @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
         return scheduleService.getAllEmployeesScheduleData(dateFrom, dateTo);
+    }
+
+    @CrossOrigin
+    @GetMapping("public/getAllEmployeesScheduleDataWithNames")
+    public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
+                                                                        @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
+        return scheduleService.getAllEmployeesScheduleDataWithNames(dateFrom, dateTo);
     }
 
     @CrossOrigin

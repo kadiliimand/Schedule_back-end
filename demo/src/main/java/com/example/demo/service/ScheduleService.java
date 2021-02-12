@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
 import com.example.demo.dataclasses.Schedule;
+import com.example.demo.dataclasses.ScheduleWithNames;
 import com.example.demo.errorHandling.ScheduleException;
 import com.example.demo.repositories.EmployeeRepository;
 import com.example.demo.repositories.ScheduleRepository;
@@ -70,6 +71,9 @@ public class ScheduleService {
 
     public List<Schedule> getAllEmployeesScheduleData(LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getAllEmployeesScheduleData(dateFrom, dateTo);
+    }
+    public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo) {
+        return scheduleRepository.getAllEmployeeScheduleDataWithNames(dateFrom, dateTo);
     }
 
     public String changeScheduleRow(int id, String name, LocalDate date, LocalTime startTime, LocalTime endTime) {

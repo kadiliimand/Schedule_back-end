@@ -1,6 +1,7 @@
 package com.example.demo.repositories;
 
 import com.example.demo.dataclasses.Schedule;
+import com.example.demo.dataclasses.ScheduleWithNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -79,6 +80,29 @@ public class ScheduleRepository {
             return shift;
         }
     }
+
+    public List<ScheduleWithNames> getAllEmployeeScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo){
+        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.id_number";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("dateFrom", dateFrom);
+        paraMap.put("dateTo", dateTo);
+        return jdbcTemplate.query(sql, paraMap, new ScheduleWithNamesRowMapper());
+    }
+
+    private class ScheduleWithNamesRowMapper implements RowMapper<ScheduleWithNames> {
+        @Override
+        public ScheduleWithNames mapRow(ResultSet resultSet, int i) throws SQLException {
+            ScheduleWithNames shift = new ScheduleWithNames();
+            shift.setId(resultSet.getInt("id"));
+            shift.setDate(resultSet.getDate("date"));
+            shift.setStartTime(resultSet.getTime("start_time"));
+            shift.setEndTime(resultSet.getTime("end_time"));
+            shift.setWorkedHours(resultSet.getInt("worked_time")/60.00);
+            shift.setName(resultSet.getString("name"));
+            return shift;
+        }
+    }
+
     public void deleteEmployeeScheduleRow(int id) {
         String sql = "DELETE ROW FROM working_hours WHERE id = :shiftId";
         Map<String, Object> paraMap = new HashMap<>();
