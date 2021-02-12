@@ -70,7 +70,7 @@ public class ScheduleRepository {
         @Override
         public Schedule mapRow(ResultSet resultSet, int i) throws SQLException {
             Schedule shift = new Schedule();
-            shift.setId(resultSet.getInt("wh_id"));
+            shift.setId(resultSet.getInt("id"));
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
