@@ -54,7 +54,7 @@ public class ScheduleController {
     @CrossOrigin
     @PostMapping("public/createSchedule")
     public void createSchedule(@RequestParam("name") String name,
-                               @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date,
+                               @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
                                @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
         scheduleService.createSchedule(name, date, startTime, endTime);
@@ -77,7 +77,7 @@ public class ScheduleController {
 
     @CrossOrigin
     @GetMapping("public/getEmployeeScheduleData")
-    public List<Schedule> getEmployeeScheduleData(@RequestParam("name") String name,
+    public List<ScheduleWithNames> getEmployeeScheduleData(@RequestParam("name") String name,
                                                   @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                                   @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getEmployeeScheduleData(name, dateFrom, dateTo);

@@ -71,8 +71,8 @@ public class EmployeeRepository {
 
     private class EmployeeRowMapper implements RowMapper {
         @Override
-        public Employee mapRow(ResultSet resultSet, int i) throws SQLException {
-            Employee person = new Employee();
+        public EmployeeNames mapRow(ResultSet resultSet, int i) throws SQLException {
+            EmployeeNames person = new EmployeeNames();
             person.setName(resultSet.getString("name"));
             return person;
         }
