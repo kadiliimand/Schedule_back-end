@@ -14,6 +14,7 @@ public class Schedule {
     private Time endTime;
     private int workedTime;
     private String idNumber;
+    private double workedHours;
 
     public String getName() {
         return name;
@@ -31,7 +32,7 @@ public class Schedule {
         this.workedHours = workedHours;
     }
 
-    private double workedHours;
+
 
     public Date getDate() {
         return date;
