@@ -89,4 +89,9 @@ public class ScheduleController {
                                                       @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
         return scheduleService.getAllEmployeesScheduleData(dateFrom, dateTo);
     }
+
+    @CrossOrigin
+    @GetMapping("public/getScheduleData")
+    public List getScheduleData(){ return scheduleService.getScheduleData();}
 }
+

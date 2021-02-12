@@ -90,5 +90,10 @@ public class ScheduleRepository {
         paraMap.put("dateTo", dateTo);
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
     }
+    public List<Schedule> getScheduleData() {
+        String sql = "SELECT * FROM working_hours";
+        List<Schedule> scheduleList = jdbcTemplate.query(sql, new HashMap<>(), new ScheduleRowMapper());
+        return scheduleList;
+    }
 
 }
