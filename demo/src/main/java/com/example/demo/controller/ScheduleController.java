@@ -98,7 +98,7 @@ public class ScheduleController {
     }
 
     @CrossOrigin
-    @GetMapping("public/getScheduleData")
-    public List getScheduleData(){ return scheduleService.getScheduleData();}
+    @GetMapping("public/getScheduleDataWithNames")
+    public List getScheduleDataWithNames(){ return scheduleService.getScheduleDataWithNames();}
 }
 

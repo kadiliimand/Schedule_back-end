@@ -87,8 +87,8 @@ public class ScheduleService {
         return "Work shift deleted!";
     }
 
-    public List getScheduleData(){
-        return scheduleRepository.getScheduleData();
+    public List getScheduleDataWithNames(){
+        return scheduleRepository.getScheduleDataWithNames();
     }
 }
 
