@@ -45,7 +45,6 @@ public class ScheduleRepository {
         String sql = "UPDATE  working_hours SET id_number= :id_number, date=:date, " +
                 "start_time=:start_time, end_time= :end_time, worked_time= :workedTime WHERE id=:shiftId ";
         Duration workedTime = Duration.between(startTime, endTime);
-
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("shiftId", id);
         paraMap.put("id_number", id_number);
@@ -88,12 +87,12 @@ public class ScheduleRepository {
         paraMap.put("dateTo", dateTo);
         return jdbcTemplate.query(sql, paraMap, new ScheduleWithNamesRowMapper());
     }
-
+//git GM 1124
     private class ScheduleWithNamesRowMapper implements RowMapper<ScheduleWithNames> {
         @Override
         public ScheduleWithNames mapRow(ResultSet resultSet, int i) throws SQLException {
             ScheduleWithNames shift = new ScheduleWithNames();
-            shift.setId(resultSet.getInt("id"));
+            shift.setWhId(resultSet.getInt("wh_id"));
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));

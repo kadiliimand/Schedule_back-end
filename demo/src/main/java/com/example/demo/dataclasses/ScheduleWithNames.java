@@ -4,14 +4,19 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class ScheduleWithNames {
-    private int id;
+    private int whId;
+    private String name;
+    private Date date;
+    private Time startTime;
+    private Time endTime;
+    private double workedHours;
 
-    public int getId() {
-        return id;
+    public int getWhId() {
+        return whId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setWhId(int whId) {
+        this.whId = whId;
     }
 
     public String getName() {
@@ -46,14 +51,6 @@ public class ScheduleWithNames {
         this.endTime = endTime;
     }
 
-    public int getWorkedTime() {
-        return workedTime;
-    }
-
-    public void setWorkedTime(int workedTime) {
-        this.workedTime = workedTime;
-    }
-
     public double getWorkedHours() {
         return workedHours;
     }
@@ -62,11 +59,6 @@ public class ScheduleWithNames {
         this.workedHours = workedHours;
     }
 
-    private String name;
-    private Date date;
-    private Time startTime;
-    private Time endTime;
-    private int workedTime;
-    private double workedHours;
+
 
 }

@@ -75,7 +75,7 @@ public class ScheduleService {
     public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getAllEmployeeScheduleDataWithNames(dateFrom, dateTo);
     }
-//test
+
     public String changeScheduleRow(int id, String name, LocalDate date, LocalTime startTime, LocalTime endTime) {
         String idNumber = employeeRepository.getEmployeeId(name);
         scheduleRepository.changeScheduleRow(id, idNumber, date, startTime, endTime);
