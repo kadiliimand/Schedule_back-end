@@ -126,7 +126,7 @@ public class ScheduleRepository {
     }
 
     public List<ScheduleWithNames> getScheduleDataWithNames() {
-        String sql = "SELECT * FROM working_hours";
+        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w";
         List<ScheduleWithNames> scheduleWithNamesList = jdbcTemplate.query(sql, new HashMap<>(), new ScheduleWithNamesRowMapper());
         return scheduleWithNamesList;
     }
