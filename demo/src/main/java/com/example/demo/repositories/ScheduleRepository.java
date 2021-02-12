@@ -36,27 +36,30 @@ public class ScheduleRepository {
         paraMap.put("date", date);
         paraMap.put("start_time", startTime);
         paraMap.put("end_time", endTime);
-        paraMap.put("workedTime", workedTime.getSeconds()/60.00/60.00);
+        paraMap.put("workedTime", workedTime.getSeconds()/60.00);
         jdbcTemplate.update(sql, paraMap);
     }
 
     public void changeScheduleRow(int id, String id_number, LocalDate date, LocalTime startTime, LocalTime endTime) {
         String sql = "UPDATE  working_hours SET id_number= :id_number, date=:date, " +
-                "start_time=:start_time, end_time= :end_time WHERE id=:shiftId ";
+                "start_time=:start_time, end_time= :end_time, worked_time= :workedTime WHERE id=:shiftId ";
+        Duration workedTime = Duration.between(startTime, endTime);
+
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("shiftId", id);
         paraMap.put("id_number", id_number);
         paraMap.put("date", date);
         paraMap.put("start_time", startTime);
         paraMap.put("end_time", endTime);
+        paraMap.put("workedTime", ((double) workedTime.getSeconds())/60.00);
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public List<Schedule> getEmployeeScheduleData(String id_number, LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT id, id_number, date, start_time, end_time, worked_time FROM working_hours WHERE id_Number = :idNumber " +
+    public List<Schedule> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo){
+        String sql = "SELECT id, id_number, date, start_time, end_time, worked_time FROM working_hours WHERE id_number = :idNumber " +
                 "AND date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("idNumber", id_number);
+        paraMap.put("idNumber", idNumber);
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
@@ -65,12 +68,13 @@ public class ScheduleRepository {
     private class ScheduleRowMapper implements RowMapper<Schedule> {
         @Override
         public Schedule mapRow(ResultSet resultSet, int i) throws SQLException {
+            double workedHours = resultSet.getInt("worked_time");
             Schedule shift = new Schedule();
             shift.setId(resultSet.getInt("id"));
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
-            shift.setWorkedTime(resultSet.getInt("worked_time"));
+            shift.setWorkedHours(resultSet.getInt("worked_time")/60.00);
             shift.setIdNumber(resultSet.getString("id_number"));
             return shift;
         }
