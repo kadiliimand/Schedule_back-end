@@ -79,7 +79,6 @@ public class ScheduleRepository {
             return shift;
         }
     }
-
     public void deleteEmployeeScheduleRow(int id) {
         String sql = "DELETE ROW FROM working_hours WHERE id = :shiftId";
         Map<String, Object> paraMap = new HashMap<>();
@@ -93,6 +92,11 @@ public class ScheduleRepository {
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
+    }
+    public List<Schedule> getScheduleData() {
+        String sql = "SELECT * FROM working_hours";
+        List<Schedule> scheduleList = jdbcTemplate.query(sql, new HashMap<>(), new ScheduleRowMapper());
+        return scheduleList;
     }
 
 }

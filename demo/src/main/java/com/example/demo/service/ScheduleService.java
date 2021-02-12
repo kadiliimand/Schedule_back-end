@@ -82,5 +82,9 @@ public class ScheduleService {
         scheduleRepository.deleteEmployeeScheduleRow(id);
         return "Work shift deleted!";
     }
+
+    public List getScheduleData(){
+        return scheduleRepository.getScheduleData();
+    }
 }
 
