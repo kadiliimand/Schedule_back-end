@@ -79,7 +79,6 @@ public class ScheduleRepository {
             return shift;
         }
     }
-
     public void deleteEmployeeScheduleRow(int id) {
         String sql = "DELETE ROW FROM working_hours WHERE id = :shiftId";
         Map<String, Object> paraMap = new HashMap<>();
