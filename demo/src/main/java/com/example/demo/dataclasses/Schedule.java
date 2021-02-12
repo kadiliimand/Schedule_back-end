@@ -23,6 +23,16 @@ public class Schedule {
         this.name = name;
     }
 
+    public double getWorkedHours() {
+        return workedHours;
+    }
+
+    public void setWorkedHours(double workedHours) {
+        this.workedHours = workedHours;
+    }
+
+    private double workedHours;
+
     public Date getDate() {
         return date;
     }
