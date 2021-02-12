@@ -145,9 +145,9 @@ public class ScheduleRepository {
         public ScheduleReport mapRow(ResultSet resultSet, int i) throws SQLException {
             ScheduleReport report = new ScheduleReport();
             report.setIdNumber(resultSet.getString("id_number"));
-            report.setSalaryCode(resultSet.getInt("salary_code"));
+            report.setSalaryCode(resultSet.getInt("wh_salary_code"));
             report.setHourlyPay(resultSet.getBigDecimal("hourly_pay"));
-            report.setWorkedHours(resultSet.getDouble("working_hours"));
+            report.setWorkedHours(resultSet.getDouble("worked_time")/60);
             report.setEmptyRow("");
             report.setDepartmentCode(resultSet.getString("department_code"));
             return report;

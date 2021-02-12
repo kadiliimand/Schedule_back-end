@@ -72,4 +72,14 @@
         <renameColumn tableName="working_hours" newColumnName="wh_id" oldColumnName="id"/>
     </changeSet>
 
+    <changeSet id="2021-02-12vol2" author="Kadi">
+        <addColumn tableName="working_hours">
+            <column name="salary_code" type="int"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2021-02-12vol3" author="Kadi">
+        <renameColumn tableName="working_hours" oldColumnName="salary_code" newColumnName="wh_salary_code"/>
+    </changeSet>
+
 </databaseChangeLog>
