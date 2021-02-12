@@ -131,4 +131,22 @@ public class ScheduleRepository {
         return scheduleList;
     }
 
+    public List<ScheduleReport> getScheduleReport(LocalDate dateFrom, LocalDate dateTo){
+        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.id_number WHERE date >= :dateFrom AND date <= :dateTo";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("dateFrom", dateFrom);
+        paraMap.put("dateTo", dateTo);
+        return jdbcTemplate.query(sql, paraMap, new ScheduleReport());
+    }
+
+    private class ScheduleReport implements RowMapper<ScheduleReport> {
+        @Override
+        public ScheduleReport mapRow(ResultSet resultSet, int i) throws SQLException {
+            ScheduleReport report = new ScheduleReport();
+
+            return report;
+        }
+    }
+
+
 }
