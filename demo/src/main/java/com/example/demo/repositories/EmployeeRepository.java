@@ -77,7 +77,7 @@ public class EmployeeRepository {
             return person;
         }
     }
-//test
+
     public List<Employee> getAllEmployeesData(){
         String sql = "SELECT * FROM employee";
         return jdbcTemplate.query(sql, new HashMap<>(), new EmployeesRowMapper());

@@ -89,11 +89,11 @@ public class ScheduleController {
                                                       @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getAllEmployeesScheduleData(dateFrom, dateTo);
     }
-
+//http://localhost:8080/public/getAllEmployeesScheduleDataWithNames?dateFrom=2021-02-11&dateTo=2021-02-14
     @CrossOrigin
     @GetMapping("public/getAllEmployeesScheduleDataWithNames")
-    public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
-                                                                        @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
+    public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                                                        @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getAllEmployeesScheduleDataWithNames(dateFrom, dateTo);
     }
 

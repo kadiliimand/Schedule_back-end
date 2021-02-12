@@ -93,7 +93,7 @@ public class ScheduleRepository {
         @Override
         public ScheduleWithNames mapRow(ResultSet resultSet, int i) throws SQLException {
             ScheduleWithNames shift = new ScheduleWithNames();
-            shift.setId(resultSet.getInt("wh_id"));
+            shift.setWhId(resultSet.getInt("wh_id"));
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
