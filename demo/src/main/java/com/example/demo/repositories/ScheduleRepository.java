@@ -125,10 +125,10 @@ public class ScheduleRepository {
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
     }
 
-    public List<Schedule> getScheduleData() {
+    public List<ScheduleWithNames> getScheduleDataWithNames() {
         String sql = "SELECT * FROM working_hours";
-        List<Schedule> scheduleList = jdbcTemplate.query(sql, new HashMap<>(), new ScheduleRowMapper());
-        return scheduleList;
+        List<ScheduleWithNames> scheduleWithNamesList = jdbcTemplate.query(sql, new HashMap<>(), new ScheduleWithNamesRowMapper());
+        return scheduleWithNamesList;
     }
 
 }
