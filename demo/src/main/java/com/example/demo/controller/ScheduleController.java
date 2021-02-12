@@ -54,7 +54,7 @@ public class ScheduleController {
     @CrossOrigin
     @PostMapping("public/createSchedule")
     public void createSchedule(@RequestParam("name") String name,
-                               @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                               @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date,
                                @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
                                @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
         scheduleService.createSchedule(name, date, startTime, endTime);
@@ -78,22 +78,22 @@ public class ScheduleController {
     @CrossOrigin
     @GetMapping("public/getEmployeeScheduleData")
     public List<ScheduleWithNames> getEmployeeScheduleData(@RequestParam("name") String name,
-                                                  @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                                  @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
+                                                  @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
+                                                  @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
         return scheduleService.getEmployeeScheduleData(name, dateFrom, dateTo);
     }
 
     @CrossOrigin
     @GetMapping("public/getAllEmployeesScheduleData")
-    public List<Schedule> getAllEmployeesScheduleData(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                                      @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
+    public List<Schedule> getAllEmployeesScheduleData(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
+                                                      @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
         return scheduleService.getAllEmployeesScheduleData(dateFrom, dateTo);
     }
 //http://localhost:8080/public/getAllEmployeesScheduleDataWithNames?dateFrom=2021-02-11&dateTo=2021-02-14
     @CrossOrigin
     @GetMapping("public/getAllEmployeesScheduleDataWithNames")
-    public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                                                        @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
+    public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFrom,
+                                                                        @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateTo){
         return scheduleService.getAllEmployeesScheduleDataWithNames(dateFrom, dateTo);
     }
 
