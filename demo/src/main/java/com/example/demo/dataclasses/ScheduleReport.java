@@ -3,19 +3,20 @@ package com.example.demo.dataclasses;
 import java.math.BigDecimal;
 
 public class ScheduleReport {
-    private int id;
+
+    private String idNumber;
     private int salaryCode;
     private BigDecimal hourlyPay;
     private double workedHours;
-    private int emptyRow;
+    private String emptyRow;
     private String departmentCode;
 
-    public int getId() {
-        return id;
+    public String getIdNumber() {
+        return idNumber;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 
     public int getSalaryCode() {
@@ -42,11 +43,11 @@ public class ScheduleReport {
         this.workedHours = workedHours;
     }
 
-    public int getEmptyRow() {
+    public String getEmptyRow() {
         return emptyRow;
     }
 
-    public void setEmptyRow(int emptyRow) {
+    public void setEmptyRow(String emptyRow) {
         this.emptyRow = emptyRow;
     }
 
