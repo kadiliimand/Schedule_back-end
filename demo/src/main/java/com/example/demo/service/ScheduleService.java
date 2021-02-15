@@ -99,5 +99,10 @@ public class ScheduleService {
     public List<ScheduleReport> exportData(LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getScheduleReport(dateFrom, dateTo);
     }
+
+    public List<ScheduleWithNames> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo) {
+        return scheduleRepository.getWorkHourSumForOneName(name, dateFrom, dateTo);
+    }
+
 }
 
