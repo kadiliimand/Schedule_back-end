@@ -142,7 +142,7 @@ public class ScheduleRepository {
             report.setIdNumber(resultSet.getString("id_number"));
             report.setSalaryCode(resultSet.getInt("wh_salary_code"));
             report.setHourlyPay(resultSet.getBigDecimal("hourly_pay"));
-            report.setWorkedHours(resultSet.getDouble("worked_hours"));
+            report.setWorkedHours(resultSet.getDouble("?column?")); //kuidas see summa SQL-ist kätte saada?
             report.setEmptyRow("");
             report.setDepartmentCode(resultSet.getString("department_code"));
             return report;
