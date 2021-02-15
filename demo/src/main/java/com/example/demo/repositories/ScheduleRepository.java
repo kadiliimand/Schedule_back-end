@@ -40,7 +40,8 @@ public class ScheduleRepository {
         paraMap.put("id", idNumber);
         paraMap.put("date", date);
         paraMap.put("startTime", startTime);
-        paraMap.put("endTime", endTime);
+        paraMap.put("endT" +
+                "ime", endTime);
         paraMap.put("workedTime", workedTime.getSeconds()/60.00);
         paraMap.put("salaryCode", salaryCode);
         jdbcTemplate.update(sql, paraMap);
@@ -155,16 +156,16 @@ public class ScheduleRepository {
             report.setIdNumber(resultSet.getString("id_number"));
             report.setSalaryCode(resultSet.getInt("wh_salary_code"));
             report.setHourlyPay(resultSet.getBigDecimal("hourly_pay"));
-            report.setWorkedHours(resultSet.getDouble("?column?")); //kuidas see summa SQL-ist kätte saada?
+            report.setWorkedHours(resultSet.getDouble("worked_hours"));
             report.setEmptyRow("");
             report.setDepartmentCode(resultSet.getString("department_code"));
             return report;
         }
     }
     public List<OneEmployeeReport> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours\n" +
-                "FROM employee INNER JOIN working_hours wh ON employee.id_number = wh.wh_id_number WHERE date >= :dateFrom \n" +
-                "AND date <= :dateTo AND name = :name GROUP BY name, wh_salary_code ORDER BY wh_salary_code ASC;";
+        String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours " +
+                "FROM employee INNER JOIN working_hours wh ON employee.id_number = wh.wh_id_number WHERE date >= :dateFrom " +
+                "AND date <= :dateTo AND name = :name GROUP BY name, wh_salary_code ORDER BY wh_salary_code ASC";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("name", name);
         paraMap.put("dateFrom", dateFrom);
