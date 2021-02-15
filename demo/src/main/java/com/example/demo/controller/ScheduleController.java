@@ -22,18 +22,18 @@ public class ScheduleController {
     @PostMapping("public/createEmployee")
     public String createEmployee(@RequestParam("idNumber") String idNumber, @RequestParam("name") String name,
                                  @RequestParam("departmentCode") String departmentCode,
-                                 @RequestParam("hourlyPay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode,
+                                 @RequestParam("hourlyPay") BigDecimal hourlyPay,
                                  @RequestParam("password") String password) {
-        return scheduleService.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+        return scheduleService.createEmployee(idNumber, name, departmentCode, hourlyPay, password);
     }
 
     @CrossOrigin
     @PutMapping("public/updateEmployeeData")
     public String updateEmployeeData(@RequestParam("id") int id, @RequestParam("idNumber") String idNumber,
                                      @RequestParam("name") String name, @RequestParam("departmentCode") String departmentCode,
-                                     @RequestParam("hourlyPay") BigDecimal hourlyPay, @RequestParam("salaryCode") int salaryCode,
+                                     @RequestParam("hourlyPay") BigDecimal hourlyPay,
                                      @RequestParam("password") String password){
-        return scheduleService.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+        return scheduleService.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, password);
     }
     //http://localhost:8080/public/getAllEmployeesData
     @CrossOrigin
@@ -53,8 +53,9 @@ public class ScheduleController {
     public void createSchedule(@RequestParam("name") String name,
                                @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-                               @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
-        scheduleService.createSchedule(name, date, startTime, endTime);
+                               @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
+                               @RequestParam("salaryCode") int salaryCode) {
+        scheduleService.createSchedule(name, date, startTime, endTime, salaryCode);
     }
 
     @CrossOrigin
@@ -110,7 +111,7 @@ public class ScheduleController {
     //http://localhost:8080/public/workhoursumforonename?name=For For&dateFrom=2021-02-01&dateTo=2021-03-01
     @CrossOrigin
     @GetMapping("public/workhoursumforonename")
-    public List<ScheduleWithNames> workHourSumForOneName(@RequestParam("name") String name, @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+    public List<OneEmployeeReport> workHourSumForOneName(@RequestParam("name") String name, @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                            @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getWorkHourSumForOneName(name, dateFrom, dateTo);
     }
