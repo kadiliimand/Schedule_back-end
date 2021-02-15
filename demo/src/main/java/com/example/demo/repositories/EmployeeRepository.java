@@ -40,7 +40,11 @@ public class EmployeeRepository {
         String sql = "SELECT id_number FROM employee WHERE name = :nameParam";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("nameParam", name);
-        return jdbcTemplate.queryForObject(sql, paraMap, String.class);
+        try{
+            return jdbcTemplate.queryForObject(sql, paraMap, String.class);
+        } catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     public String getEmployeeName(String idNumber) {
