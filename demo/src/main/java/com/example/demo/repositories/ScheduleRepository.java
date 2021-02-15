@@ -31,7 +31,7 @@ public class ScheduleRepository {
 //    private PasswordEncoder passwordEncoder;
 
 
-//endTime enne ei läinud üles.
+
     public void createSchedule(String idNumber, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
         String sql = "INSERT INTO working_hours (wh_id_number, date, start_time, end_time, worked_time, wh_salary_code) " +
                 "VALUES (:id, :date, :startTime, :endTime, :workedTime, :salaryCode)";
@@ -40,8 +40,7 @@ public class ScheduleRepository {
         paraMap.put("id", idNumber);
         paraMap.put("date", date);
         paraMap.put("startTime", startTime);
-        paraMap.put("endT" +
-                "ime", endTime);
+        paraMap.put("endTime", endTime);
         paraMap.put("workedTime", workedTime.getSeconds()/60.00);
         paraMap.put("salaryCode", salaryCode);
         jdbcTemplate.update(sql, paraMap);
@@ -58,15 +57,15 @@ public class ScheduleRepository {
     }
 
     public void changeScheduleRow(int id, String id_number, LocalDate date, LocalTime startTime, LocalTime endTime) {
-        String sql = "UPDATE  working_hours SET wh_id_number= :id_number, date=:date, " +
-                "start_time=:start_time, end_time= :end_time, worked_time= :workedTime WHERE wh_id=:shiftId ";
+        String sql = "UPDATE  working_hours SET wh_id_number= :idNumber, date=:date, " +
+                "start_time= :startTime, end_time= :endTime, worked_time= :workedTime WHERE wh_id=:shiftId ";
         Duration workedTime = Duration.between(startTime, endTime);
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("shiftId", id);
-        paraMap.put("id_number", id_number);
+        paraMap.put("idNumber", id_number);
         paraMap.put("date", date);
-        paraMap.put("start_time", startTime);
-        paraMap.put("end_time", endTime);
+        paraMap.put("startTime", startTime);
+        paraMap.put("endTime", endTime);
         paraMap.put("workedTime", ((double) workedTime.getSeconds())/60.00);
         jdbcTemplate.update(sql, paraMap);
     }
