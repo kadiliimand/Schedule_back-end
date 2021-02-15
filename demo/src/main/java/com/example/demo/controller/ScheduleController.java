@@ -95,10 +95,6 @@ public class ScheduleController {
         return scheduleService.getAllEmployeesScheduleDataWithNames(dateFrom, dateTo);
     }
 
-    @CrossOrigin
-    @GetMapping("public/getScheduleDataWithNames")
-    public List getScheduleDataWithNames(){ return scheduleService.getScheduleDataWithNames();}
-
     //
     //http://localhost:8080/public/exportData?dateFrom=2021-02-01&dateTo=2021-03-01
     @CrossOrigin

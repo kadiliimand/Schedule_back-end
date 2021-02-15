@@ -94,9 +94,6 @@ public class ScheduleService {
         return "Work shift deleted!";
     }
 
-    public List getScheduleDataWithNames() {
-        return scheduleRepository.getScheduleDataWithNames();
-    }
 
     public List<ScheduleReport> exportData(LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getScheduleReport(dateFrom, dateTo);
