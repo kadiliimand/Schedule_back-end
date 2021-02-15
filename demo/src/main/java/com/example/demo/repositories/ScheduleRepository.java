@@ -58,7 +58,7 @@ public class ScheduleRepository {
     }
 
     public List<ScheduleWithNames> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.id_number WHERE e.id_number = :idNumber " +
+        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.wh_id_number WHERE e.id_number = :idNumber " +
                 "AND date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNumber", idNumber);
@@ -76,13 +76,14 @@ public class ScheduleRepository {
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
             shift.setWorkedHours(resultSet.getInt("worked_time")/60.00);
-            shift.setIdNumber(resultSet.getString("id_number"));
+            shift.setIdNumber(resultSet.getString("wh_id_number"));
             return shift;
         }
     }
 
     public List<ScheduleWithNames> getAllEmployeeScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.id_number WHERE date >= :dateFrom AND date <= :dateTo";
+        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.wh_id_number " +
+                "WHERE date >= :dateFrom AND date <= :dateTo ORDER BY date ASC ";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
@@ -118,14 +119,6 @@ public class ScheduleRepository {
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
     }
 
-    public List<Schedule> getAllEmployeesScheduleDataWithName(LocalDate dateFrom, LocalDate dateTo) {
-        String sql = "SELECT * FROM working_hours WHERE date >= :dateFrom AND date <= :dateTo";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("dateFrom", dateFrom);
-        paraMap.put("dateTo", dateTo);
-        return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
-    }
-
     public List<ScheduleWithNames> getScheduleDataWithNames() {
         String sql = "SELECT * FROM working_hours";
         List<ScheduleWithNames> scheduleWithNamesList = jdbcTemplate.query(sql, new HashMap<>(), new ScheduleWithNamesRowMapper());
@@ -133,7 +126,9 @@ public class ScheduleRepository {
     }
 
     public List<ScheduleReport> getScheduleReport(LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.id_number WHERE date >= :dateFrom AND date <= :dateTo";
+        String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00, " +
+                "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
+                "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY employee.id_number, wh_salary_code";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
@@ -147,7 +142,7 @@ public class ScheduleRepository {
             report.setIdNumber(resultSet.getString("id_number"));
             report.setSalaryCode(resultSet.getInt("wh_salary_code"));
             report.setHourlyPay(resultSet.getBigDecimal("hourly_pay"));
-            report.setWorkedHours(resultSet.getDouble("worked_time")/60);
+            report.setWorkedHours(resultSet.getDouble("?column?")); //kuidas see summa SQL-ist kätte saada?
             report.setEmptyRow("");
             report.setDepartmentCode(resultSet.getString("department_code"));
             return report;
