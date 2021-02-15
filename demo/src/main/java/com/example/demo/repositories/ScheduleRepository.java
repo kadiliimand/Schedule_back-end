@@ -126,7 +126,7 @@ public class ScheduleRepository {
     }
 
     public List<ScheduleReport> getScheduleReport(LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00, " +
+        String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00 AS, " +
                 "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
                 "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY employee.id_number, wh_salary_code";
         Map<String, Object> paraMap = new HashMap<>();
