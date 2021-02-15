@@ -27,7 +27,9 @@ public class ScheduleService {
     @Transactional
     public String createEmployee(String idNumber, String name, String departmentCode,
                                  BigDecimal hourlyPay, int salaryCode, String password) {
-        employeeRepository.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+        if (employeeRepository.checkEmployeeIdNumberExistence(idNumber) == null) {
+            employeeRepository.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+        }
         return "New employee has been created!";
     }
 
@@ -39,8 +41,12 @@ public class ScheduleService {
     @Transactional
     public String updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
                                      int salaryCode, String password) {
-        employeeRepository.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
-        return "All data is updated!";
+        if (employeeRepository.getEmployeeRowId(id) == 0) {
+            throw new ScheduleException("Invalid employee system id number!");
+        } else {
+            employeeRepository.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+            return "All data is updated!";
+        }
     }
 
     @Transactional
@@ -69,6 +75,7 @@ public class ScheduleService {
     public List<Schedule> getAllEmployeesScheduleData(LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getAllEmployeesScheduleData(dateFrom, dateTo);
     }
+
     public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getAllEmployeeScheduleDataWithNames(dateFrom, dateTo);
     }
@@ -84,11 +91,11 @@ public class ScheduleService {
         return "Work shift deleted!";
     }
 
-    public List getScheduleDataWithNames(){
+    public List getScheduleDataWithNames() {
         return scheduleRepository.getScheduleDataWithNames();
     }
 
-    public List<ScheduleReport> exportData(LocalDate dateFrom, LocalDate dateTo){
+    public List<ScheduleReport> exportData(LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getScheduleReport(dateFrom, dateTo);
     }
 }
