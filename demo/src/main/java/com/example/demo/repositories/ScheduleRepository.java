@@ -1,9 +1,12 @@
 package com.example.demo.repositories;
 
+import com.example.demo.dataclasses.OneEmployeeReport;
 import com.example.demo.dataclasses.Schedule;
 import com.example.demo.dataclasses.ScheduleReport;
 import com.example.demo.dataclasses.ScheduleWithNames;
+import com.example.demo.errorHandling.ScheduleException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -29,24 +32,34 @@ public class ScheduleRepository {
 
 
 
-    public void createSchedule(String idNumber, LocalDate date, LocalTime startTime, LocalTime endTime) {
-        String sql = "INSERT INTO working_hours (id_number, date, start_time, end_time, worked_time) " +
-                "VALUES (:id, :date, :start_time, :end_time, :workedTime)";
+    public void createSchedule(String idNumber, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
+        String sql = "INSERT INTO working_hours (wh_id_number, date, start_time, end_time, worked_time, wh_salary_code) " +
+                "VALUES (:id, :date, :startTime, :endTime, :workedTime, :salaryCode)";
         Duration workedTime = Duration.between(startTime, endTime);
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("id", idNumber);
         paraMap.put("date", date);
-        paraMap.put("start_time", startTime);
-        paraMap.put("end_time", endTime);
+        paraMap.put("startTime", startTime);
+        paraMap.put("endTime", endTime);
         paraMap.put("workedTime", workedTime.getSeconds()/60.00);
+        paraMap.put("salaryCode", salaryCode);
         jdbcTemplate.update(sql, paraMap);
+    }
+    public int checkScheduleRowId(int whRowId) {
+        try {
+            String sql = "SELECT wh_id FROM working_hours WHERE wh_id = :whRowId";
+            Map<String, Object> paraMap = new HashMap<>();
+            paraMap.put("whRowId", whRowId);
+            return jdbcTemplate.queryForObject(sql, paraMap, int.class);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ScheduleException("Row ID not existing.");
+        }
     }
 
     public void changeScheduleRow(int id, String id_number, LocalDate date, LocalTime startTime, LocalTime endTime) {
-        String sql = "UPDATE  working_hours SET id_number= :id_number, date=:date, " +
+        String sql = "UPDATE  working_hours SET wh_id_number= :id_number, date=:date, " +
                 "start_time=:start_time, end_time= :end_time, worked_time= :workedTime WHERE wh_id=:shiftId ";
         Duration workedTime = Duration.between(startTime, endTime);
-
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("shiftId", id);
         paraMap.put("id_number", id_number);
@@ -148,7 +161,7 @@ public class ScheduleRepository {
             return report;
         }
     }
-    public List<ScheduleWithNames> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo){
+    public List<OneEmployeeReport> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo){
         String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours\n" +
                 "FROM employee INNER JOIN working_hours wh ON employee.id_number = wh.wh_id_number WHERE date >= :dateFrom \n" +
                 "AND date <= :dateTo AND name = :name GROUP BY name, wh_salary_code ORDER BY wh_salary_code ASC;";
@@ -159,10 +172,10 @@ public class ScheduleRepository {
         return jdbcTemplate.query(sql, paraMap, new WorkHourSumForOneNameRowMapper());
     }
 
-    private class WorkHourSumForOneNameRowMapper implements RowMapper<ScheduleWithNames> {
+    private class WorkHourSumForOneNameRowMapper implements RowMapper<OneEmployeeReport> {
         @Override
-        public ScheduleWithNames mapRow(ResultSet resultSet, int i) throws SQLException {
-            ScheduleWithNames report = new ScheduleWithNames();
+        public OneEmployeeReport mapRow(ResultSet resultSet, int i) throws SQLException {
+            OneEmployeeReport report = new OneEmployeeReport();
             report.setName(resultSet.getString("name"));
             report.setSalaryCode(resultSet.getInt("wh_salary_code"));
             report.setWorkedHours(resultSet.getDouble("worked_hours"));
