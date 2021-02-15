@@ -10,6 +10,16 @@ public class ScheduleWithNames {
     private Time startTime;
     private Time endTime;
     private double workedHours;
+    private int salaryCode;
+
+
+    public int getSalaryCode() {
+        return salaryCode;
+    }
+
+    public void setSalaryCode(int salaryCode) {
+        this.salaryCode = salaryCode;
+    }
 
     public int getWhId() {
         return whId;

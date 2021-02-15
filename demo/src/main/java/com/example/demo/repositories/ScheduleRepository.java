@@ -126,7 +126,7 @@ public class ScheduleRepository {
     }
 
     public List<ScheduleReport> getScheduleReport(LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00 AS, " +
+        String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00 AS worked_hours, " +
                 "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
                 "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY employee.id_number, wh_salary_code";
         Map<String, Object> paraMap = new HashMap<>();
@@ -145,6 +145,30 @@ public class ScheduleRepository {
             report.setWorkedHours(resultSet.getDouble("?column?")); //kuidas see summa SQL-ist kätte saada?
             report.setEmptyRow("");
             report.setDepartmentCode(resultSet.getString("department_code"));
+            return report;
+        }
+    }
+
+    public List<ScheduleWithNames> getScheduleReportWithNames(LocalDate dateFrom, LocalDate dateTo){
+        String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours, " +
+                "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
+                "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY date";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("dateFrom", dateFrom);
+        paraMap.put("dateTo", dateTo);
+        return jdbcTemplate.query(sql, paraMap, new ScheduleWithNamesSummedRowMapper());
+    }
+
+    private class ScheduleWithNamesSummedRowMapper implements RowMapper<ScheduleWithNames> {
+        @Override
+        public ScheduleWithNames mapRow(ResultSet resultSet, int i) throws SQLException {
+            ScheduleWithNames report = new ScheduleWithNames();
+            report.setDate(resultSet.getDate("date"));
+            report.setName(resultSet.getString("name"));
+            report.setStartTime(resultSet.getTime("start_time"));
+            report.setEndTime(resultSet.getTime("start_time"));
+            report.setSalaryCode(resultSet.getInt("wh_salary_code"));
+            report.setWorkedHours(resultSet.getDouble("worked_hours"));
             return report;
         }
     }
