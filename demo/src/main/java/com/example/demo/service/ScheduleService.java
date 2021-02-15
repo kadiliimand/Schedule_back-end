@@ -27,10 +27,11 @@ public class ScheduleService {
     @Transactional
     public String createEmployee(String idNumber, String name, String departmentCode,
                                  BigDecimal hourlyPay, int salaryCode, String password) {
-        if (employeeRepository.checkEmployeeIdNumberExistence(idNumber) == null) {
+        if (employeeRepository.checkEmployeeIdNumberExistence(idNumber)) {
             employeeRepository.createEmployee(idNumber, name, departmentCode, hourlyPay, salaryCode, password);
+            return "New employee has been created!";
         }
-        return "New employee has been created!";
+        return "Entered ID number already in use!";
     }
 
     @Transactional

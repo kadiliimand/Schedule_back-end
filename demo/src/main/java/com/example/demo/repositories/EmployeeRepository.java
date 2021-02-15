@@ -3,7 +3,6 @@ package com.example.demo.repositories;
 
 import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
-import com.example.demo.errorHandling.ScheduleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -77,16 +76,20 @@ public class EmployeeRepository {
         }
     }
 
-    public String checkEmployeeIdNumberExistence (String idNumber){
+    public boolean checkEmployeeIdNumberExistence (String idNumber) {
         String sql = "SELECT id_number FROM employee WHERE id_number = :idNrParam";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNrParam", idNumber);
-            if(jdbcTemplate.queryForObject(sql, paraMap, String.class) == null){
-            return null;
-        } else {
-        throw new ScheduleException("Person with this social number already exist in system!");
+        try {
+            jdbcTemplate.queryForObject(sql, paraMap, String.class);
+            return false;
+             }
+        catch (EmptyResultDataAccessException e){
+            return true;
         }
+
     }
+
 
     public List<EmployeeNames> getAllEmployeesNames() {
         String sql = "SELECT name FROM employee";
