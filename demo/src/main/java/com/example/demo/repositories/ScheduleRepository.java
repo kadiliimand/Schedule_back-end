@@ -31,7 +31,7 @@ public class ScheduleRepository {
 //    private PasswordEncoder passwordEncoder;
 
 
-
+//endTime enne ei läinud üles.
     public void createSchedule(String idNumber, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
         String sql = "INSERT INTO working_hours (wh_id_number, date, start_time, end_time, worked_time, wh_salary_code) " +
                 "VALUES (:id, :date, :startTime, :endTime, :workedTime, :salaryCode)";
