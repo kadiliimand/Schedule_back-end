@@ -148,11 +148,34 @@ public class ScheduleRepository {
             return report;
         }
     }
+    public List<ScheduleWithNames> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo){
+        String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours\n" +
+                "FROM employee INNER JOIN working_hours wh ON employee.id_number = wh.wh_id_number WHERE date >= :dateFrom \n" +
+                "AND date <= :dateTo AND name = :name GROUP BY name, wh_salary_code ORDER BY wh_salary_code ASC;";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("name", name);
+        paraMap.put("dateFrom", dateFrom);
+        paraMap.put("dateTo", dateTo);
+        return jdbcTemplate.query(sql, paraMap, new WorkHourSumForOneNameRowMapper());
+    }
 
+    private class WorkHourSumForOneNameRowMapper implements RowMapper<ScheduleWithNames> {
+        @Override
+        public ScheduleWithNames mapRow(ResultSet resultSet, int i) throws SQLException {
+            ScheduleWithNames report = new ScheduleWithNames();
+            report.setName(resultSet.getString("name"));
+            report.setSalaryCode(resultSet.getInt("wh_salary_code"));
+            report.setWorkedHours(resultSet.getDouble("worked_hours"));
+            return report;
+        }
+    }
+
+//hetkel allolevat me ei kasuta
+    /*
     public List<ScheduleWithNames> getScheduleReportWithNames(LocalDate dateFrom, LocalDate dateTo){
         String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours, " +
                 "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
-                "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY date";
+                "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY date ORDER BY date ASC";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
@@ -171,7 +194,7 @@ public class ScheduleRepository {
             report.setWorkedHours(resultSet.getDouble("worked_hours"));
             return report;
         }
-    }
+    } */
 
 
 }
