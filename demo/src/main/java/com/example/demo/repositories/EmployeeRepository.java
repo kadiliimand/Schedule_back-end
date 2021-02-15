@@ -3,7 +3,9 @@ package com.example.demo.repositories;
 
 import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
+import com.example.demo.errorHandling.ScheduleException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -56,12 +58,34 @@ public class EmployeeRepository {
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("id", id);
         paraMap.put("name", name);
-        paraMap.put("id_Number", idNumber);
+        paraMap.put("id_number", idNumber);
         paraMap.put("departmentCode", departmentCode);
         paraMap.put("hourlyPay", hourlyPay);
         paraMap.put("salaryCode", salaryCode);
         paraMap.put("password", password);
         jdbcTemplate.update(sql, paraMap);
+    }
+
+    public int getEmployeeRowId (int id){
+        String sql = "SELECT id FROM employee WHERE id = :idParam";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("idParam", id);
+        try{
+            return jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
+        } catch (EmptyResultDataAccessException e){
+            return 0;
+        }
+    }
+
+    public String checkEmployeeIdNumberExistence (String idNumber){
+        String sql = "SELECT id_number FROM employee WHERE id_number = :idNrParam";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("idNrParam", idNumber);
+            if(jdbcTemplate.queryForObject(sql, paraMap, String.class) == null){
+            return null;
+        } else {
+        throw new ScheduleException("Person with this social number already exist in system!");
+        }
     }
 
     public List<EmployeeNames> getAllEmployeesNames() {
