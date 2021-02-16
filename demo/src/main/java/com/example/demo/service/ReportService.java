@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class ReportService {
@@ -29,6 +30,7 @@ public class ReportService {
             }
             rowEmployeeMap.put(element.getName(), new TimePair(element.getStartTime(), element.getEndTime()));
         }
-        return new ScheduleResponse(rows);
+        Map<Date, Map<String, TimePair>> sortedRows = new TreeMap<Date, Map<String, TimePair>>(rows);
+        return new ScheduleResponse(sortedRows);
     }
 }

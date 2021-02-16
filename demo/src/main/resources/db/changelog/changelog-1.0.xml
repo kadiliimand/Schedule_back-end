@@ -86,4 +86,8 @@
         <renameColumn tableName="working_hours" oldColumnName="id_number" newColumnName="wh_id_number"/>
     </changeSet>
 
+    <changeSet id="2021-02-16vol1" author="Gunnar">
+        <dropColumn tableName="employee" columnName="salary_code"/>
+    </changeSet>
+
 </databaseChangeLog>
