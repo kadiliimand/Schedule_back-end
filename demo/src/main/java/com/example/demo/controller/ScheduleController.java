@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.dataclasses.*;
+import com.example.demo.service.JsonToCSVService;
 import com.example.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,6 +20,9 @@ public class ScheduleController {
 
     @Autowired
     private ScheduleService scheduleService;
+
+    @Autowired
+    private JsonToCSVService jsonToCSVService;
 
     @CrossOrigin
     @PostMapping("public/createEmployee")
@@ -100,6 +106,14 @@ public class ScheduleController {
     public List<OneEmployeeReport> workHourSumForOneName(@RequestParam("name") String name, @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                            @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getWorkHourSumForOneName(name, dateFrom, dateTo);
+    }
+
+    @GetMapping("public/testExportData")
+    public void testExport(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                           @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+                           HttpServletResponse response){
+        jsonToCSVService.getScheduleReport(dateFrom, dateTo, response);
+
     }
 }
 
