@@ -43,7 +43,7 @@ public class EmployeeRepository {
         paraMap.put("nameParam", name);
             return jdbcTemplate.queryForObject(sql, paraMap, String.class);
         }catch (EmptyResultDataAccessException e) {
-            throw new ScheduleException("Employee not existing or spelled wrong.");
+            throw new ScheduleException("Employee name does not exist or spelled wrong.");
         }
     }
 
@@ -72,7 +72,7 @@ public class EmployeeRepository {
         }
     }
 
-    public boolean checkEmployeeIdNumberExistence (String idNumber) {
+    public boolean canAddEmployee (String idNumber) {
         String sql = "SELECT id_number FROM employee WHERE id_number = :idNrParam";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNrParam", idNumber);

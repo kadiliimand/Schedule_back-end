@@ -48,7 +48,7 @@ public class ScheduleRepository {
             paraMap.put("whRowId", whRowId);
             return jdbcTemplate.queryForObject(sql, paraMap, int.class);
         } catch (EmptyResultDataAccessException e) {
-            throw new ScheduleException("Row ID not existing.");
+            throw new ScheduleException("Invalid ID.");
         }
     }
 
@@ -88,15 +88,6 @@ public class ScheduleRepository {
             shift.setIdNumber(resultSet.getString("wh_id_number"));
             return shift;
         }
-    }
-
-    public List<ScheduleWithNames> getAllEmployeeScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.wh_id_number " +
-                "WHERE date >= :dateFrom AND date <= :dateTo ORDER BY date ASC ";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("dateFrom", dateFrom);
-        paraMap.put("dateTo", dateTo);
-        return jdbcTemplate.query(sql, paraMap, new ScheduleWithNamesRowMapper());
     }
 
     private class ScheduleWithNamesRowMapper implements RowMapper<ScheduleWithNames> {

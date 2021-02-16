@@ -17,7 +17,6 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    //http://localhost:8080/public/getAllEmployeeScheduleDataWithNamesReport?dateFrom=2021-02-11&dateTo=2021-02-14
     @CrossOrigin
     @GetMapping("public/getAllEmployeeScheduleDataWithNamesReport")
     public ScheduleResponse getAllEmployeeScheduleDataWithNamesReport(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
