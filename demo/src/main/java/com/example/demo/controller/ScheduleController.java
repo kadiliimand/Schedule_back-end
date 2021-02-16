@@ -108,9 +108,9 @@ public class ScheduleController {
         return scheduleService.exportData(dateFrom, dateTo);
     }
 
-    //http://localhost:8080/public/workhoursumforonename?name=For For&dateFrom=2021-02-01&dateTo=2021-03-01
+    //http://localhost:8080/public/workHourSumForOneName?name=For For&dateFrom=2021-02-01&dateTo=2021-03-01
     @CrossOrigin
-    @GetMapping("public/workhoursumforonename")
+    @GetMapping("public/workHourSumForOneName")
     public List<OneEmployeeReport> workHourSumForOneName(@RequestParam("name") String name, @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                            @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getWorkHourSumForOneName(name, dateFrom, dateTo);
