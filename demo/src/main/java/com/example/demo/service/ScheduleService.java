@@ -5,6 +5,7 @@ import com.example.demo.errorHandling.ScheduleException;
 import com.example.demo.repositories.EmployeeRepository;
 import com.example.demo.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,10 @@ public class ScheduleService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Qualifier("")
+    @Autowired
+    private Object EmployeeNames;
 
 
     @Transactional
@@ -52,7 +57,7 @@ public class ScheduleService {
 
     @Transactional
     public List<EmployeeNames> getAllEmployeesNames() {
-        return employeeRepository.getAllEmployeesNames();
+        return employeeRepository.getAllEmployeesNames().sort(EmployeeNames);
     }
 
     @Transactional
