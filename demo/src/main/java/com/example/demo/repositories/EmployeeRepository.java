@@ -45,15 +45,7 @@ public class EmployeeRepository {
         }catch (EmptyResultDataAccessException e) {
             throw new ScheduleException("Employee not existing or spelled wrong.");
         }
-
     }
-
-/*    public String getEmployeeName(String idNumber) {
-        String sql = "SELECT name FROM employee WHERE idNumber = :idNumberParam";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("idNumberParam", idNumber);
-        return jdbcTemplate.queryForObject(sql, paraMap, String.class);
-    }*/
 
     public void updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
                                    String password) {
@@ -91,9 +83,7 @@ public class EmployeeRepository {
         catch (EmptyResultDataAccessException e){
             return true;
         }
-
     }
-
 
     public List<EmployeeNames> getAllEmployeesNames() {
         String sql = "SELECT name FROM employee";

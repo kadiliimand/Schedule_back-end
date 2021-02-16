@@ -27,11 +27,6 @@ public class ScheduleRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-
-
-
     public void createSchedule(String idNumber, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
         String sql = "INSERT INTO working_hours (wh_id_number, date, start_time, end_time, worked_time, wh_salary_code) " +
                 "VALUES (:id, :date, :startTime, :endTime, :workedTime, :salaryCode)";
@@ -45,6 +40,7 @@ public class ScheduleRepository {
         paraMap.put("salaryCode", salaryCode);
         jdbcTemplate.update(sql, paraMap);
     }
+
     public int checkScheduleRowId(int whRowId) {
         try {
             String sql = "SELECT wh_id FROM working_hours WHERE wh_id = :whRowId";
@@ -132,7 +128,6 @@ public class ScheduleRepository {
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
     }
 
-
     public List<ScheduleReport> getScheduleReport(LocalDate dateFrom, LocalDate dateTo){
         String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00 AS worked_hours, " +
                 "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
@@ -156,6 +151,7 @@ public class ScheduleRepository {
             return report;
         }
     }
+
     public List<OneEmployeeReport> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo){
         String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours " +
                 "FROM employee INNER JOIN working_hours wh ON employee.id_number = wh.wh_id_number WHERE date >= :dateFrom " +
@@ -177,32 +173,4 @@ public class ScheduleRepository {
             return report;
         }
     }
-
-//hetkel allolevat me ei kasuta
-    /*
-    public List<ScheduleWithNames> getScheduleReportWithNames(LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours, " +
-                "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
-                "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY date ORDER BY date ASC";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("dateFrom", dateFrom);
-        paraMap.put("dateTo", dateTo);
-        return jdbcTemplate.query(sql, paraMap, new ScheduleWithNamesSummedRowMapper());
-    }
-
-    private class ScheduleWithNamesSummedRowMapper implements RowMapper<ScheduleWithNames> {
-        @Override
-        public ScheduleWithNames mapRow(ResultSet resultSet, int i) throws SQLException {
-            ScheduleWithNames report = new ScheduleWithNames();
-            report.setDate(resultSet.getDate("date"));
-            report.setName(resultSet.getString("name"));
-            report.setStartTime(resultSet.getTime("start_time"));
-            report.setEndTime(resultSet.getTime("start_time"));
-            report.setSalaryCode(resultSet.getInt("wh_salary_code"));
-            report.setWorkedHours(resultSet.getDouble("worked_hours"));
-            return report;
-        }
-    } */
-
-
 }
