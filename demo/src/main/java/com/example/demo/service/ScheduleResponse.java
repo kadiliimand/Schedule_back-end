@@ -2,9 +2,7 @@ package com.example.demo.service;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ScheduleResponse {
     private final List<String> names = new ArrayList<>();
