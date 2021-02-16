@@ -24,11 +24,6 @@ public class ScheduleService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Qualifier("")
-    @Autowired
-    private Object EmployeeNames;
-
-
     @Transactional
     public String createEmployee(String idNumber, String name, String departmentCode,
                                  BigDecimal hourlyPay, String password) {
@@ -57,7 +52,7 @@ public class ScheduleService {
 
     @Transactional
     public List<EmployeeNames> getAllEmployeesNames() {
-        return employeeRepository.getAllEmployeesNames().sort(EmployeeNames);
+        return employeeRepository.getAllEmployeesNames();
     }
 
     @Transactional
