@@ -32,7 +32,6 @@ public class EmployeeRepository {
         paraMap.put("idNumber", idNumber);
         paraMap.put("departmentCode", departmentCode);
         paraMap.put("hourlyPay", hourlyPay);
-        paraMap.put("salaryCode", salaryCode);
         paraMap.put("password", password);
         jdbcTemplate.update(sql, paraMap);
     }
@@ -58,7 +57,6 @@ public class EmployeeRepository {
         paraMap.put("id_number", idNumber);
         paraMap.put("departmentCode", departmentCode);
         paraMap.put("hourlyPay", hourlyPay);
-        paraMap.put("salaryCode", salaryCode);
         paraMap.put("password", password);
         jdbcTemplate.update(sql, paraMap);
     }
