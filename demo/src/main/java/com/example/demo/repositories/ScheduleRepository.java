@@ -96,7 +96,7 @@ public class ScheduleRepository {
 
     public List<ScheduleWithNames> getAllEmployeeScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo){
         String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.wh_id_number " +
-                "WHERE date >= :dateFrom AND date <= :dateTo ORDER BY date ASC ";
+                "WHERE date >= :dateFrom AND date <= :dateTo GROUP BY name ORDER BY date ASC ";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
@@ -118,7 +118,7 @@ public class ScheduleRepository {
     }
 
     public void deleteEmployeeScheduleRow(int id) {
-        String sql = "DELETE ROW FROM working_hours WHERE wh_id = :shiftId";
+        String sql = "DELETE FROM working_hours WHERE wh_id = :shiftId";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("shiftId", id);
         jdbcTemplate.update(sql, paraMap);
