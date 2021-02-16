@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dataclasses.ScheduleWithNames;
 import com.example.demo.repositories.ReportRepository;
+import com.example.demo.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class ReportService {
     @Autowired
     private ReportRepository reportRepository;
 
+    @Autowired
+    private ScheduleRepository scheduleRepository;
+
     public ScheduleResponse getAllEmployeeScheduleDataWithNamesReport(LocalDate dateFrom, LocalDate dateTo) {
         List<ScheduleWithNames> response = reportRepository.getAllEmployeeScheduleDataWithNamesReport(dateFrom, dateTo);
         Map<Date, Map<String, TimePair>> rows = new HashMap();
@@ -33,4 +37,6 @@ public class ReportService {
         Map<Date, Map<String, TimePair>> sortedRows = new TreeMap<Date, Map<String, TimePair>>(rows);
         return new ScheduleResponse(sortedRows);
     }
+
+
 }
