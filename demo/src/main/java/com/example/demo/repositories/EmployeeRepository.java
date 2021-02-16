@@ -3,6 +3,7 @@ package com.example.demo.repositories;
 
 import com.example.demo.dataclasses.Employee;
 import com.example.demo.dataclasses.EmployeeNames;
+import com.example.demo.errorHandling.ScheduleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,9 +24,9 @@ public class EmployeeRepository {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     public void createEmployee(String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
-                               int salaryCode, String password) {
-        String sql = "INSERT INTO employee (name, id_number, department_code, hourly_pay, salary_code, password) " +
-                "VALUES (:name, :idNumber, :departmentCode, :hourlyPay, :salaryCode, :password)";
+                               String password) {
+        String sql = "INSERT INTO employee (name, id_number, department_code, hourly_pay, password) " +
+                "VALUES (:name, :idNumber, :departmentCode, :hourlyPay, :password)";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("name", name);
         paraMap.put("idNumber", idNumber);
@@ -37,27 +38,28 @@ public class EmployeeRepository {
     }
 
     public String getEmployeeId(String name) {
+        try {
         String sql = "SELECT id_number FROM employee WHERE name = :nameParam";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("nameParam", name);
-        try{
             return jdbcTemplate.queryForObject(sql, paraMap, String.class);
-        } catch (EmptyResultDataAccessException e){
-            return null;
+        }catch (EmptyResultDataAccessException e) {
+            throw new ScheduleException("Employee not existing or spelled wrong.");
         }
+
     }
 
-    public String getEmployeeName(String idNumber) {
+/*    public String getEmployeeName(String idNumber) {
         String sql = "SELECT name FROM employee WHERE idNumber = :idNumberParam";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNumberParam", idNumber);
         return jdbcTemplate.queryForObject(sql, paraMap, String.class);
-    }
+    }*/
 
     public void updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
-                                   int salaryCode, String password) {
+                                   String password) {
         String sql = "UPDATE  employee SET id_number= :id_number, name = :name, " +
-                "department_code = :departmentCode, hourly_pay = :hourlyPay, salary_code = :salaryCode, password = :password WHERE id=:id";
+                "department_code = :departmentCode, hourly_pay = :hourlyPay, password = :password WHERE id=:id";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("id", id);
         paraMap.put("name", name);
