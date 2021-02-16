@@ -16,7 +16,7 @@ import java.util.List;
 public class ScheduleController {
 
     @Autowired
-    ScheduleService scheduleService;
+    private ScheduleService scheduleService;
 
     @CrossOrigin
     @PostMapping("public/createEmployee")
