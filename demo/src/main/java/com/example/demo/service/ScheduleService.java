@@ -27,11 +27,11 @@ public class ScheduleService {
     @Transactional
     public String createEmployee(String idNumber, String name, String departmentCode,
                                  BigDecimal hourlyPay, String password) {
-        if (employeeRepository.checkEmployeeIdNumberExistence(idNumber)) {
+        if (employeeRepository.canAddEmployee(idNumber)) {
             employeeRepository.createEmployee(idNumber, name, departmentCode, hourlyPay, password);
-            return "New employee has been created!";
+            return "New employee created.";
         }
-        return "Entered ID number already in use!";
+        return "Invalid input, ID number already in use.";
     }
 
     @Transactional
@@ -43,10 +43,10 @@ public class ScheduleService {
     public String updateEmployeeData(int id, String idNumber, String name, String departmentCode, BigDecimal hourlyPay,
                                      String password) {
         if (employeeRepository.getEmployeeRowId(id) == 0) {
-            throw new ScheduleException("Invalid employee system id number!");
+            throw new ScheduleException("Invalid ID.");
         } else {
             employeeRepository.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, password);
-            return "All data is updated!";
+            return "Employee data updated.";
         }
     }
 
@@ -59,7 +59,7 @@ public class ScheduleService {
     public void createSchedule(String name, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
         String idNumber = employeeRepository.getEmployeeId(name);
         if (idNumber == null) {
-            throw new ScheduleException("No such name");
+            throw new ScheduleException("Name not found.");
         } else {
             scheduleRepository.createSchedule(idNumber, date, startTime, endTime, salaryCode);
         }
@@ -74,21 +74,17 @@ public class ScheduleService {
         return scheduleRepository.getAllEmployeesScheduleData(dateFrom, dateTo);
     }
 
-    public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(LocalDate dateFrom, LocalDate dateTo) {
-        return scheduleRepository.getAllEmployeeScheduleDataWithNames(dateFrom, dateTo);
-    }
-
     public String changeScheduleRow(int id, String name, LocalDate date, LocalTime startTime, LocalTime endTime) {
         String idNumber = employeeRepository.getEmployeeId(name);
         scheduleRepository.checkScheduleRowId(id);
         scheduleRepository.changeScheduleRow(id, idNumber, date, startTime, endTime);
-        return "Schedule change successful!";
+        return "Schedule change successful.";
     }
 
     public String deleteEmployeeScheduleRow(int id) {
         scheduleRepository.checkScheduleRowId(id);
         scheduleRepository.deleteEmployeeScheduleRow(id);
-        return "Work shift deleted!";
+        return "Shift deleted.";
     }
 
     public List<ScheduleReport> exportData(LocalDate dateFrom, LocalDate dateTo) {
@@ -98,6 +94,5 @@ public class ScheduleService {
     public List<OneEmployeeReport> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getWorkHourSumForOneName(name, dateFrom, dateTo);
     }
-
 }
 

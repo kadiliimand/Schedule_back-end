@@ -35,7 +35,7 @@ public class ScheduleController {
                                      @RequestParam("password") String password){
         return scheduleService.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, password);
     }
-    //http://localhost:8080/public/getAllEmployeesData
+
     @CrossOrigin
     @GetMapping("public/getAllEmployeesData")
     public List<Employee> getAllEmployeesData(){
@@ -87,15 +87,7 @@ public class ScheduleController {
                                                       @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getAllEmployeesScheduleData(dateFrom, dateTo);
     }
-//http://localhost:8080/public/getAllEmployeesScheduleDataWithNames?dateFrom=2021-02-11&dateTo=2021-02-14
-    @CrossOrigin
-    @GetMapping("public/getAllEmployeesScheduleDataWithNames")
-    public List<ScheduleWithNames> getAllEmployeesScheduleDataWithNames(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                                                        @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
-        return scheduleService.getAllEmployeesScheduleDataWithNames(dateFrom, dateTo);
-    }
 
-    //http://localhost:8080/public/exportData?dateFrom=2021-02-01&dateTo=2021-03-01
     @CrossOrigin
     @GetMapping("public/exportData")
     public List<ScheduleReport> exportData(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
@@ -103,7 +95,6 @@ public class ScheduleController {
         return scheduleService.exportData(dateFrom, dateTo);
     }
 
-    //http://localhost:8080/public/workHourSumForOneName?name=For For&dateFrom=2021-02-01&dateTo=2021-03-01
     @CrossOrigin
     @GetMapping("public/workHourSumForOneName")
     public List<OneEmployeeReport> workHourSumForOneName(@RequestParam("name") String name, @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
