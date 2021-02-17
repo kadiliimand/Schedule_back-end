@@ -31,7 +31,8 @@ public class LoginController {
                     .setIssuedAt(new Date())
                     .setIssuer("scheduleViewer")
                     .signWith(SignatureAlgorithm.HS256, "test123")
-                    .claim("idNumber", "user");
+                    .claim("user", idNumber)
+                    .claim("admin", idNumber);
 
             return builder.compact();
         } else {

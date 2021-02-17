@@ -68,7 +68,7 @@ public class ScheduleRepository {
 
     public List<ScheduleWithNames> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo){
         String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.wh_id_number WHERE e.id_number = :idNumber " +
-                "AND date >= :dateFrom AND date <= :dateTo";
+                "AND date >= :dateFrom AND date <= :dateTo ORDER BY date ASC";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNumber", idNumber);
         paraMap.put("dateFrom", dateFrom);
