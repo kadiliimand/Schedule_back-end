@@ -68,7 +68,7 @@ public class ScheduleRepository {
 
     public List<ScheduleWithNames> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo){
         String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.wh_id_number WHERE e.id_number = :idNumber " +
-                "AND date >= :dateFrom AND date <= :dateTo";
+                "AND date >= :dateFrom AND date <= :dateTo ORDER BY date ASC";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("idNumber", idNumber);
         paraMap.put("dateFrom", dateFrom);
@@ -186,15 +186,5 @@ public class ScheduleRepository {
             report.setWorkedHours(resultSet.getDouble("worked_hours"));
             return report;
         }
-    }
-    //TEST
-    public List<ScheduleReport> getScheduleReportFile(LocalDate dateFrom, LocalDate dateTo){
-        String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00 AS worked_hours, " +
-                "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
-                "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY employee.id_number, wh.wh_salary_code";
-        Map<String, Object> paraMap = new HashMap<>();
-        paraMap.put("dateFrom", dateFrom);
-        paraMap.put("dateTo", dateTo);
-        return jdbcTemplate.query(sql, paraMap, new ScheduleReportRowMapper());
     }
 }

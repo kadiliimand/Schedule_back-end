@@ -4,10 +4,6 @@ import com.example.demo.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
-
 @Service
 public class JsonToCSVService {
 

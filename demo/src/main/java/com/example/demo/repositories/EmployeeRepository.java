@@ -113,8 +113,6 @@ public class EmployeeRepository {
             person.setIdNumber(resultSet.getString("id_number"));
             person.setDepartmentCode(resultSet.getString("department_code"));
             person.setHourlyPay(resultSet.getBigDecimal("hourly_pay"));
-            person.setSalaryCode(resultSet.getInt("salary_code"));
-            person.setPassword(resultSet.getString("password"));
             return person;
         }
     }
