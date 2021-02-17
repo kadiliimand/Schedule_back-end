@@ -134,17 +134,17 @@ public class ScheduleRepository {
         String finalResultString = "";
         StringBuilder resultString=new StringBuilder();
         for (int i=0; i<getScheduleReport.size(); i++ ) {
-//            getScheduleReport.get(i);
-//            for (int j=0; j<getScheduleReport.size(); j++ )
-            if (getScheduleReport.get(i)=="idNumber"||
-                    getScheduleReport.get(i)=="salaryCode"||
-                    getScheduleReport.get(i)=="hourlyPay"||
-                    getScheduleReport.get(i)=="workedHours"||
-                    getScheduleReport.get(i)== "emptyRow"||
-                    getScheduleReport.get(i)== "departmentCode")
-                continue;
+//            List getScheduleReportItem = getScheduleReport.get(i);
+//            for (int j=0; j<getScheduleReportItem.size(); j++ )
+                if (getScheduleReport.get(i)=="idNumber"||
+                        getScheduleReport.get(i)=="salaryCode"||
+                        getScheduleReport.get(i)=="hourlyPay"||
+                        getScheduleReport.get(i)=="workedHours"||
+                        getScheduleReport.get(i)== "emptyRow"||
+                        getScheduleReport.get(i)== "departmentCode")
+                    continue;
             else {
-                resultString.append(getScheduleReport.get(i));
+                resultString.append(i);
                 resultString.append(",");
             }
         }
