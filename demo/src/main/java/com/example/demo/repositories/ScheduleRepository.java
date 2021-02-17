@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
@@ -130,6 +129,29 @@ public class ScheduleRepository {
         return jdbcTemplate.query(sql, paraMap, new ScheduleReportRowMapper());
     }
 
+    public String exportFileToString(LocalDate dateFrom, LocalDate dateTo) {
+        List getScheduleReport = getScheduleReport(dateFrom, dateTo);
+        String finalResultString = "";
+        StringBuilder resultString=new StringBuilder();
+        for (int i=0; i<getScheduleReport.size(); i++ ) {
+//            getScheduleReport.get(i);
+//            for (int j=0; j<getScheduleReport.size(); j++ )
+            if (getScheduleReport.get(i)=="idNumber"||
+                    getScheduleReport.get(i)=="salaryCode"||
+                    getScheduleReport.get(i)=="hourlyPay"||
+                    getScheduleReport.get(i)=="workedHours"||
+                    getScheduleReport.get(i)== "emptyRow"||
+                    getScheduleReport.get(i)== "departmentCode")
+                continue;
+            else {
+                resultString.append(getScheduleReport.get(i));
+                resultString.append(",");
+            }
+        }
+        finalResultString = resultString.toString();
+        return finalResultString;
+    }
+
     private class ScheduleReportRowMapper implements RowMapper<ScheduleReport> {
         @Override
         public ScheduleReport mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -164,5 +186,15 @@ public class ScheduleRepository {
             report.setWorkedHours(resultSet.getDouble("worked_hours"));
             return report;
         }
+    }
+    //TEST
+    public List<ScheduleReport> getScheduleReportFile(LocalDate dateFrom, LocalDate dateTo){
+        String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00 AS worked_hours, " +
+                "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
+                "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY employee.id_number, wh.wh_salary_code";
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("dateFrom", dateFrom);
+        paraMap.put("dateTo", dateTo);
+        return jdbcTemplate.query(sql, paraMap, new ScheduleReportRowMapper());
     }
 }

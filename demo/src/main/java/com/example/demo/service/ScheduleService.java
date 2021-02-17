@@ -5,7 +5,6 @@ import com.example.demo.errorHandling.ScheduleException;
 import com.example.demo.repositories.EmployeeRepository;
 import com.example.demo.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,6 +89,18 @@ public class ScheduleService {
     public List<ScheduleReport> exportData(LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getScheduleReport(dateFrom, dateTo);
     }
+/*
+    public List<ScheduleReport> exportDataFile(LocalDate dateFrom, LocalDate dateTo) {
+            try {
+                String scheduleComma = String.join("," ")", scheduleRepository.getScheduleReport(dateFrom, dateTo));
+                System.out.println(scheduleComma);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return scheduleRepository.getScheduleReport(dateFrom, dateTo);
+    }
+*/
 
     public List<OneEmployeeReport> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo) {
         return scheduleRepository.getWorkHourSumForOneName(name, dateFrom, dateTo);
