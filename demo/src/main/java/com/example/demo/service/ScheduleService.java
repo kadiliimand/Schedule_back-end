@@ -56,12 +56,13 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void createSchedule(String name, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
+    public String createSchedule(String name, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
         String idNumber = employeeRepository.getEmployeeId(name);
         if (idNumber == null) {
             throw new ScheduleException("No such name");
         } else {
             scheduleRepository.createSchedule(idNumber, date, startTime, endTime, salaryCode);
+            return "Shift created";
         }
     }
 

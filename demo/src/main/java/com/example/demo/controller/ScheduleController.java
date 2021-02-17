@@ -56,12 +56,12 @@ public class ScheduleController {
 
     @CrossOrigin
     @PostMapping("public/createSchedule")
-    public void createSchedule(@RequestParam("name") String name,
+    public String createSchedule(@RequestParam("name") String name,
                                @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
                                @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
                                @RequestParam("salaryCode") int salaryCode) {
-        scheduleService.createSchedule(name, date, startTime, endTime, salaryCode);
+        return scheduleService.createSchedule(name, date, startTime, endTime, salaryCode);
     }
 
     @CrossOrigin
@@ -108,12 +108,12 @@ public class ScheduleController {
         return scheduleService.getWorkHourSumForOneName(name, dateFrom, dateTo);
     }
 
-    @GetMapping("public/testExportData")
-    public void testExport(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                           @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
-                           HttpServletResponse response){
-        jsonToCSVService.getScheduleReport(dateFrom, dateTo, response);
-
-    }
+//    @GetMapping("public/testExportData")
+//    public void testExport(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+//                           @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+//                           HttpServletResponse response){
+//        jsonToCSVService.getScheduleReport(dateFrom, dateTo, response);
+//
+//    }
 }
 
