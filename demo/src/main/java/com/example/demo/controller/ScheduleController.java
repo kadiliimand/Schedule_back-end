@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -107,13 +108,11 @@ public class ScheduleController {
                                            @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getWorkHourSumForOneName(name, dateFrom, dateTo);
     }
-
-//    @GetMapping("public/testExportData")
-//    public void testExport(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-//                           @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
-//                           HttpServletResponse response){
-//        jsonToCSVService.getScheduleReport(dateFrom, dateTo, response);
-//
-//    }
+    @GetMapping("public/testExportDataToCSV")
+    public void testExportToCSV(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+                                HttpServletResponse response) throws IOException {
+        jsonToCSVService.getScheduleReportToCSV(dateFrom, dateTo, response);
+    }
 }
 
