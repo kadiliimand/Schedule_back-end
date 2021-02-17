@@ -108,6 +108,7 @@ public class ScheduleController {
                                            @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
         return scheduleService.getWorkHourSumForOneName(name, dateFrom, dateTo);
     }
+    @CrossOrigin
     @GetMapping("public/testExportDataToCSV")
     public void testExportToCSV(@RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                 @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
