@@ -138,7 +138,7 @@ public class ScheduleRepository {
             rowResult += ",,," + scheduleReport.getSalaryCode();
             rowResult += "," +scheduleReport.getHourlyPay();
             rowResult += "," +scheduleReport.getWorkedHours();
-            rowResult += ",," + scheduleReport.getDepartmentCode() + "/n";
+            rowResult += ",," + scheduleReport.getDepartmentCode() + "\n";
         }
         return rowResult;
     }

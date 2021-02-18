@@ -56,7 +56,7 @@ public class ScheduleController {
 
     @CrossOrigin
     @PostMapping("public/createSchedule")
-    public void createSchedule(@RequestParam("name") String name,
+    public String createSchedule(@RequestParam("name") String name,
                                @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
                                @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
