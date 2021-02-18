@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -38,7 +37,7 @@ public class ReportRepository {
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
-            shift.setWorkedHours(resultSet.getInt("worked_time")/60.00);
+            shift.setWorkedHours(Math.round(resultSet.getInt("worked_time")/60.00));
             shift.setName(resultSet.getString("name"));
             return shift;
         }
