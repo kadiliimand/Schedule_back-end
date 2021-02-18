@@ -18,7 +18,7 @@ public class JsonToCSVService {
         String str = scheduleRepository.exportFileToString(dateFrom, dateTo);
         byte[] report = str.getBytes();
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition","attachment; filename=test.csv");
+        response.setHeader("Content-disposition","attachment; filename=monthlyReport.csv");
         response.setContentLength(report.length);
         response.getOutputStream().write(report);
     }
