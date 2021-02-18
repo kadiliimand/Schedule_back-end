@@ -54,7 +54,7 @@ public class ScheduleRepository {
 
     public void changeScheduleRow(int id, String id_number, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
         String sql = "UPDATE  working_hours SET wh_id_number= :idNumber, date=:date, " +
-                "start_time= :startTime, end_time= :endTime, worked_time= :workedTime, wh_slary_code = :salaryCode WHERE wh_id=:shiftId ";
+                "start_time= :startTime, end_time= :endTime, wh_salary_code= :salaryCode, worked_time= :workedTime WHERE wh_id=:shiftId ";
         Duration workedTime = Duration.between(startTime, endTime);
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("shiftId", id);

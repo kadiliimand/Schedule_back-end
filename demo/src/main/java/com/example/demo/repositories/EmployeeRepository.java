@@ -58,6 +58,7 @@ public class EmployeeRepository {
         paraMap.put("hourlyPay", hourlyPay);
         paraMap.put("password", password);
         jdbcTemplate.update(sql, paraMap);
+
     }
 
     public int getEmployeeRowId (int id){

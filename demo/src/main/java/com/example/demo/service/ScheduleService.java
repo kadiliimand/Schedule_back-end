@@ -45,7 +45,7 @@ public class ScheduleService {
             throw new ScheduleException("Invalid employee system id number!");
         } else {
             employeeRepository.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, password);
-            return "All data is updated!";
+            return "Employee data updated!";
         }
     }
 

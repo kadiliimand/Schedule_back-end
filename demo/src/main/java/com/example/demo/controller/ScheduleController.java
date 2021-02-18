@@ -35,10 +35,10 @@ public class ScheduleController {
 
     @CrossOrigin
     @PutMapping("public/updateEmployeeData")
-    public String updateEmployeeData(@RequestParam("id") int id, @RequestParam("idNumber") String idNumber,
-                                     @RequestParam("name") String name, @RequestParam("departmentCode") String departmentCode,
-                                     @RequestParam("hourlyPay") BigDecimal hourlyPay,
-                                     @RequestParam("password") String password){
+    public String updateEmployeeData(@RequestParam("updateId") int id, @RequestParam("updateIdNumber") String idNumber,
+                                     @RequestParam("updateName") String name, @RequestParam("updateDepartmentCode") String departmentCode,
+                                     @RequestParam("updateHourlyPay") BigDecimal hourlyPay,
+                                     @RequestParam("updatePassword") String password){
         return scheduleService.updateEmployeeData(id, idNumber, name, departmentCode, hourlyPay, password);
     }
 
@@ -66,17 +66,16 @@ public class ScheduleController {
 
     @CrossOrigin
     @PutMapping("public/changeScheduleRow")
-    public String changeScheduleRow(@RequestParam("id") int id, @RequestParam("name") String name,
-                                    @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                    @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-                                    @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
-                                    @RequestParam("salaryCode") int salaryCode) {
+    public String changeScheduleRow(@RequestParam("updateId") int id, @RequestParam("updateName") String name,
+                                    @RequestParam("updateDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                    @RequestParam("updateStartTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
+                                    @RequestParam("updateEndTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime, @RequestParam("updateSalaryCode") int salaryCode) {
         return scheduleService.changeScheduleRow(id, name, date, startTime, endTime, salaryCode);
     }
 
     @CrossOrigin
     @DeleteMapping("public/deleteEmployeeScheduleRow")
-    public String deleteEmployeeScheduleRow(@RequestParam("id") int id){
+    public String deleteEmployeeScheduleRow(@RequestParam("deleteId") int id){
         return scheduleService.deleteEmployeeScheduleRow(id);
     }
 
