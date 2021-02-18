@@ -138,8 +138,8 @@ public class ScheduleRepository {
             rowResult += scheduleReport.getIdNumber();
             rowResult += ",,," + scheduleReport.getSalaryCode();
             rowResult += "," +scheduleReport.getHourlyPay();
-            rowResult += "," +scheduleReport.getWorkedHours();
-            rowResult += ",," + scheduleReport.getDepartmentCode() +"\n";
+            rowResult += "," +Math.round(scheduleReport.getWorkedHours()*100.00)/100.00;
+            rowResult += ",," + scheduleReport.getDepartmentCode() + "\n";
         }
         return rowResult;
     }

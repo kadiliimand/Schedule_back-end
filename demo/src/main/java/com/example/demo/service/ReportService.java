@@ -33,6 +33,4 @@ public class ReportService {
         Map<Date, Map<String, TimePair>> sortedRows = new TreeMap<Date, Map<String, TimePair>>(rows);
         return new ScheduleResponse(sortedRows);
     }
-//    https://stackoverflow.com/questions/21974407/how-to-stream-a-json-object-to-a-httpurlconnection-post-request
-
 }
