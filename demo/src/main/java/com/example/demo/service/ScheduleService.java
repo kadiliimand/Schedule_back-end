@@ -74,10 +74,10 @@ public class ScheduleService {
         return scheduleRepository.getAllEmployeesScheduleData(dateFrom, dateTo);
     }
 
-    public String changeScheduleRow(int id, String name, LocalDate date, LocalTime startTime, LocalTime endTime) {
+    public String changeScheduleRow(int id, String name, LocalDate date, LocalTime startTime, LocalTime endTime, int salaryCode) {
         String idNumber = employeeRepository.getEmployeeId(name);
         scheduleRepository.checkScheduleRowId(id);
-        scheduleRepository.changeScheduleRow(id, idNumber, date, startTime, endTime);
+        scheduleRepository.changeScheduleRow(id, idNumber, date, startTime, endTime, salaryCode);
         return "Schedule change successful!";
     }
 
