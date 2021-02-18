@@ -69,8 +69,9 @@ public class ScheduleController {
     public String changeScheduleRow(@RequestParam("id") int id, @RequestParam("name") String name,
                                     @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                     @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-                                    @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
-        return scheduleService.changeScheduleRow(id, name, date, startTime, endTime);
+                                    @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
+                                    @RequestParam("salaryCode") int salaryCode) {
+        return scheduleService.changeScheduleRow(id, name, date, startTime, endTime, salaryCode);
     }
 
     @CrossOrigin
