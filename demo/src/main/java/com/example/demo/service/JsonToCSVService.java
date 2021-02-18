@@ -17,7 +17,8 @@ public class JsonToCSVService {
     public void getScheduleReportToCSV(LocalDate dateFrom, LocalDate dateTo, HttpServletResponse response) throws IOException, IOException {
         String str = scheduleRepository.exportFileToString(dateFrom, dateTo);
         byte[] report = str.getBytes();
-        response.setContentType(str);
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition","attachment; filename=test.csv");
         response.setContentLength(report.length);
         response.getOutputStream().write(report);
     }

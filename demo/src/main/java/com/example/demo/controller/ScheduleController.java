@@ -61,7 +61,7 @@ public class ScheduleController {
                                @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
                                @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
                                @RequestParam("salaryCode") int salaryCode) {
-        scheduleService.createSchedule(name, date, startTime, endTime, salaryCode);
+        return scheduleService.createSchedule(name, date, startTime, endTime, salaryCode);
     }
 
     @CrossOrigin
