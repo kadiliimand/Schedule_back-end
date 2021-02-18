@@ -36,7 +36,7 @@ public class ScheduleRepository {
         paraMap.put("date", date);
         paraMap.put("startTime", startTime);
         paraMap.put("endTime", endTime);
-        paraMap.put("workedTime", workedTime.getSeconds()/60.00);
+        paraMap.put("workedTime", workedTime.getSeconds() / 60.00);
         paraMap.put("salaryCode", salaryCode);
         jdbcTemplate.update(sql, paraMap);
     }
@@ -62,11 +62,11 @@ public class ScheduleRepository {
         paraMap.put("date", date);
         paraMap.put("startTime", startTime);
         paraMap.put("endTime", endTime);
-        paraMap.put("workedTime", ((double) workedTime.getSeconds())/60.00);
+        paraMap.put("workedTime", ((double) workedTime.getSeconds()) / 60.00);
         jdbcTemplate.update(sql, paraMap);
     }
 
-    public List<ScheduleWithNames> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo){
+    public List<ScheduleWithNames> getEmployeeScheduleData(String idNumber, LocalDate dateFrom, LocalDate dateTo) {
         String sql = "SELECT * FROM employee e LEFT JOIN working_hours w ON e.id_number = w.wh_id_number WHERE e.id_number = :idNumber " +
                 "AND date >= :dateFrom AND date <= :dateTo ORDER BY date ASC";
         Map<String, Object> paraMap = new HashMap<>();
@@ -84,7 +84,7 @@ public class ScheduleRepository {
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
-            shift.setWorkedHours(resultSet.getInt("worked_time")/60.00);
+            shift.setWorkedHours(resultSet.getInt("worked_time") / 60.00);
             shift.setIdNumber(resultSet.getString("wh_id_number"));
             return shift;
         }
@@ -98,7 +98,7 @@ public class ScheduleRepository {
             shift.setDate(resultSet.getDate("date"));
             shift.setStartTime(resultSet.getTime("start_time"));
             shift.setEndTime(resultSet.getTime("end_time"));
-            shift.setWorkedHours(resultSet.getInt("worked_time")/60.00);
+            shift.setWorkedHours(resultSet.getInt("worked_time") / 60.00);
             shift.setName(resultSet.getString("name"));
             return shift;
         }
@@ -112,14 +112,14 @@ public class ScheduleRepository {
     }
 
     public List<Schedule> getAllEmployeesScheduleData(LocalDate dateFrom, LocalDate dateTo) {
-       String sql = "SELECT * FROM working_hours WHERE date >= :dateFrom AND date <= :dateTo";
+        String sql = "SELECT * FROM working_hours WHERE date >= :dateFrom AND date <= :dateTo";
         Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("dateFrom", dateFrom);
         paraMap.put("dateTo", dateTo);
         return jdbcTemplate.query(sql, paraMap, new ScheduleRowMapper());
     }
 
-    public List<ScheduleReport> getScheduleReport(LocalDate dateFrom, LocalDate dateTo){
+    public List<ScheduleReport> getScheduleReport(LocalDate dateFrom, LocalDate dateTo) {
         String sql = "SELECT employee.id_number, wh.wh_salary_code, employee.hourly_pay, SUM(wh.worked_time)/60.00 AS worked_hours, " +
                 "employee.department_code FROM employee INNER JOIN working_hours wh ON employee.id_number = " +
                 "wh.wh_id_number WHERE date >= :dateFrom AND date <= :dateTo GROUP BY employee.id_number, wh.wh_salary_code";
@@ -130,28 +130,19 @@ public class ScheduleRepository {
     }
 
     public String exportFileToString(LocalDate dateFrom, LocalDate dateTo) {
-        List getScheduleReport = getScheduleReport(dateFrom, dateTo);
-        String finalResultString = "";
-        StringBuilder resultString=new StringBuilder();
-        for (int i=0; i<getScheduleReport.size(); i++ ) {
-//            List getScheduleReportItem = getScheduleReport.get(i);
-//            for (int j=0; j<getScheduleReportItem.size(); j++ )
-                if (getScheduleReport.get(i)=="idNumber"||
-                        getScheduleReport.get(i)=="salaryCode"||
-                        getScheduleReport.get(i)=="hourlyPay"||
-                        getScheduleReport.get(i)=="workedHours"||
-                        getScheduleReport.get(i)== "emptyRow"||
-                        getScheduleReport.get(i)== "departmentCode")
-                    continue;
-            else {
-                    String appendable =(getScheduleReport.get(i)).toString();
-                    resultString.append(appendable);
-                    resultString.append(",");
-            }
+        List<ScheduleReport> getScheduleReport = getScheduleReport(dateFrom, dateTo);
+        String rowResult = "";
+
+        for (ScheduleReport scheduleReport : getScheduleReport) {
+            rowResult += scheduleReport.getIdNumber();
+            rowResult += ",,," + scheduleReport.getSalaryCode();
+            rowResult += "," +scheduleReport.getHourlyPay();
+            rowResult += "," +scheduleReport.getWorkedHours();
+            rowResult += ",," + scheduleReport.getDepartmentCode() + "/n";
         }
-        finalResultString = resultString.toString();
-        return finalResultString;
+        return rowResult;
     }
+
 
     private class ScheduleReportRowMapper implements RowMapper<ScheduleReport> {
         @Override
@@ -167,7 +158,7 @@ public class ScheduleRepository {
         }
     }
 
-    public List<OneEmployeeReport> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo){
+    public List<OneEmployeeReport> getWorkHourSumForOneName(String name, LocalDate dateFrom, LocalDate dateTo) {
         String sql = "SELECT employee.name, wh.wh_salary_code, SUM(wh.worked_time)/60.00 AS worked_hours " +
                 "FROM employee INNER JOIN working_hours wh ON employee.id_number = wh.wh_id_number WHERE date >= :dateFrom " +
                 "AND date <= :dateTo AND name = :name GROUP BY name, wh_salary_code ORDER BY wh_salary_code ASC";
